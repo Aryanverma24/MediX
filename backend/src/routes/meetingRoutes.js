@@ -1,6 +1,6 @@
 // routes/meetingRoutes.js
 import express from "express";
-import { protect, admin } from "../middleware/authmiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 import {
   createOrUpdateMeeting,
   getTodaySession,
