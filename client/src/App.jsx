@@ -1,9 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/ui/Loader";
+
 import Login from "./components/auth/Login";
 import Register from "./components/auth/RegisterForm";
+
 import Dashboard from "./pages/user/Dashboard";
 import Profile from "./pages/user/Profile";
 import JoinMeeting from "./pages/user/JoinMeeting";
@@ -11,6 +13,7 @@ import Attendance from "./pages/user/Attendance";
 import TreeGrowth from "./pages/user/TreeGrowth";
 import Achievements from "./pages/user/Achievements";
 import Settings from "./pages/user/Settings";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import AllUsers from "./pages/admin/AllUsers";
 import CreateMeeting from "./pages/admin/CreateMeeting";
@@ -19,15 +22,15 @@ import EngagementControl from "./pages/admin/EngagementControl";
 import Analytics from "./pages/admin/Analytics";
 import SystemSettings from "./pages/admin/SystemSettings";
 import SecurityLogs from "./pages/admin/SecurityLogs";
+
 import AdminLayout from "./components/layout/AdminLayout";
 import UserLayout from "./components/layout/UserLayout";
-import Sidebar from "./components/layout/Sidebar";
 import LandingPage from "./pages/LandingPage/LandingPage";
 
 function App() {
   const { user, loadingUser } = useAuth();
 
-  // ✅ Show premium loader while checking auth
+  // ✅ Loader while checking auth
   if (loadingUser) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-teal-50">
@@ -42,27 +45,41 @@ function App() {
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-teal-50">
           <Routes>
 
-            {/* Public Routes */}
+            {/* ===========================================
+               ✅ PUBLIC ROUTES
+            ============================================ */}
+
+            {/* Landing Page - Anyone can access */}
+            <Route path="/" element={<LandingPage />} />
+
             <Route
               path="/auth/login"
-              element={!user ? <Login /> :
-                 user.role === "admin" ? <Navigate to="/admin" replace /> : <Navigate to="/" replace />}
+              element={
+                !user ? (
+                  <Login />
+                ) : (
+                  <Navigate to="/dashboard" replace />
+                )
+              }
             />
+
             <Route
               path="/auth/register"
-              element={!user ? <Register /> : <Navigate to="/" replace />}
+              element={
+                !user ? (
+                  <Register />
+                ) : (
+                  <Navigate to="/dashboard" replace />
+                )
+              }
             />
 
-            {/* <Route
-              path="/"
-              element={<LandingPage />}
-            /> */}
+            {/* ===========================================
+               ✅ PROTECTED DASHBOARD ROUTE
+            ============================================ */}
 
-              
-
-            {/* Root Protected Route */}
             <Route
-              path="/"
+              path="/dashboard"
               element={
                 user ? (
                   user.role === "admin" ? (
@@ -80,7 +97,10 @@ function App() {
               }
             />
 
-            {/* Admin Routes */}
+            {/* ===========================================
+               ✅ ADMIN ROUTES (Protected)
+            ============================================ */}
+
             <Route
               path="/admin"
               element={
@@ -93,6 +113,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/users"
               element={
@@ -105,6 +126,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/create-meeting"
               element={
@@ -117,6 +139,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/attendance-reports"
               element={
@@ -129,6 +152,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/engagement"
               element={
@@ -141,6 +165,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/analytics"
               element={
@@ -153,6 +178,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/settings"
               element={
@@ -165,6 +191,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/admin/security-logs"
               element={
@@ -178,7 +205,10 @@ function App() {
               }
             />
 
-            {/* User Only */}
+            {/* ===========================================
+               ✅ USER ROUTES (Protected)
+            ============================================ */}
+
             <Route
               path="/user"
               element={
@@ -191,6 +221,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/user/profile"
               element={
@@ -203,6 +234,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/join-meeting"
               element={
@@ -215,6 +247,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/attendance"
               element={
@@ -227,6 +260,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/user/tree-growth"
               element={
@@ -239,6 +273,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/user/achievements"
               element={
@@ -251,6 +286,7 @@ function App() {
                 )
               }
             />
+
             <Route
               path="/user/settings"
               element={
@@ -264,12 +300,16 @@ function App() {
               }
             />
 
-            {/* Fallback */}
+            {/* ===========================================
+               ✅ FALLBACK
+            ============================================ */}
+
             <Route path="*" element={<Navigate to="/" replace />} />
 
           </Routes>
         </div>
       </BrowserRouter>
+
       <Toaster position="top-right" />
     </>
   );
