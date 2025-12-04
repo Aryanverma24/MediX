@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import logo from '../../../assets/avaykt-ehsaas-logo.png'
 import { useAuth } from '../../../hooks/useAuth'
 import SidebarLink from '../../../components/ui/SidebarLink'
@@ -15,6 +15,7 @@ const LandingSidebar = () => {
      const { user, logout, fetchMe } = useAuth();
       const [openMenu, setOpenMenu] = useState(false);
       const [profileOpen, setProfileOpen] = useState(false);
+      const navigate = useNavigate();
 
       useGSAP(() => {
         gsap.from(sidebarRef.current,{
