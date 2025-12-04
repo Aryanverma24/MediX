@@ -56,6 +56,10 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await API.post('/auth/logout', {}, { withCredentials: true });
+      //clearing local storage
+       localStorage.removeItem('token');
+       //clearing cookie
+       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     } catch (error) {
       console.error("Logout error:", error);
     } finally {

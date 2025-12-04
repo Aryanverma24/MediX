@@ -27,9 +27,10 @@ export default function RegisterForm() {
       const res = await registerUser({ name, email, password });
 
       console.log("RESPONSE ✅", res.data);
-
+      const data = res.data;
       // Save token in localStorage
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res?.data?.token);
+      localStorage.setItem("token",data?.token)
 
       toast.success("Registered & Logged In!");
 
