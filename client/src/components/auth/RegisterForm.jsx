@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import API from "../../utils/api";      
 import { useAuth } from "../../hooks/useAuth";  
 import { useNavigate } from "react-router-dom";
+import Loader from "../ui/Loader";
 
 export default function RegisterForm() {
   const { isloading, register: registerUser } = useAuth();
@@ -15,31 +16,37 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [loading,setLoading] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (password !== confirm) {
         toast.error("Passwords do not match");
         return;
       }
 
-      const res = await registerUser({ name, email, password });
+      const { success , data , message } = await registerUser({ name, email, password });
 
-      console.log("RESPONSE ✅", res.data);
-      const data = res.data;
-      // Save token in localStorage
-      localStorage.setItem("token", res?.data?.token);
-      localStorage.setItem("token",data?.token)
-
-      toast.success("Registered & Logged In!");
-
+      if(success){
+        toast.success("Registered & Logged In!");
+        navigate("/");
+      }
       // Redirect to dashboard
-      navigate("/");
     } catch (error) {
       toast.error(error?.response?.data?.message || "Registration failed");
     }
+    finally{
+      setLoading(false);
+    }
   };
+
+
+  {loading &&
+    <Loader />
+  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 to-pink-100 flex items-center justify-center p-4">

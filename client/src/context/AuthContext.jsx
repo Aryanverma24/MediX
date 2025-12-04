@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import API from "../utils/api";
+import { MessageSquare } from "lucide-react";
 
 export const AuthContext = createContext();
 
@@ -69,18 +70,27 @@ export const AuthProvider = ({ children }) => {
   }
 
   const register = async (data) => {
-    const res = await API.post('/auth/register', data, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      withCredentials: true
-    });
-
-    if (res.data.success) {
-      setUser(res.data.user);
+    try {
+          const res = await API.post('/auth/register', data, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        withCredentials: true
+      });
+  
+      if (res.data.success) {
+        setUser(res.data.user);
+         localStorage.setItem('token', res.data.token);
+        return { success: true, data: res.data };
+      }
+      return { success: false, message: res.data.message || 'Registration failed' };
+  } catch (error) {
+    console.log("error while registering user");
+    return {
+      success : false,
+      message : error.response?.data.message || "registration failed "
     }
-
-    return res.data;
+  }
   }
 
   const updateLocalUser = (updatedUser) => {
