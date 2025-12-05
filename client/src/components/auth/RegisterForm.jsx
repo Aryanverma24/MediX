@@ -7,6 +7,7 @@ import API from "../../utils/api";
 import { useAuth } from "../../hooks/useAuth";  
 import { useNavigate } from "react-router-dom";
 import Loader from "../ui/Loader";
+import toast from "react-hot-toast";
 
 export default function RegisterForm() {
   const { isloading, register: registerUser ,fetchMe } = useAuth();
