@@ -5,23 +5,40 @@ import { MessageSquare } from "lucide-react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
   const fetchMe = async () => {
+    const token = localStorage.getItem("token");
+
+    if(!token){
+      setUser(null);
+      setLoadingUser(false);
+      return;
+    }
+
     try {
       const res = await API.get('/user/me');
       if (!res) {
         setUser(null);
         setLoadingUser(false);
       }
-      if (res.data.success) {
+
+      if (res.data && res.data.success && res.data.user) {
         setUser(res.data.user);
+        setLoadingUser(false);
+      }
+      else{
+        setUser(null);
+        localStorage.removeItem("token")
         setLoadingUser(false);
       }
     } catch (error) {
       console.log(error);
       setUser(null);
+      localStorage.removeItem("token")
+    }finally{
       setLoadingUser(false);
     }
   }
@@ -80,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
       console.log(res)
   
-      if (res.data) {
+      if (res.data && res.data.token) {
         localStorage.setItem('token', res.data.token);
         
         if (res?.data?.user) {
@@ -89,7 +106,12 @@ export const AuthProvider = ({ children }) => {
           await fetchMe();
         }
         
-        return res.data
+        return {
+          success: true, 
+            message: res.data.message || 'Registration successful!',
+            user: res.data.user, 
+            token: res.data.token
+        }
       }
       
       const errorMessage = res.data?.message || 'Registration failed. Please try again.';
@@ -137,7 +159,7 @@ export const AuthProvider = ({ children }) => {
         loading: loadingUser
       }}
     >
-      {children}
+      {loadingUser ? <div>Loading Authentication...</div> : children}
     </AuthContext.Provider>
   )
 }

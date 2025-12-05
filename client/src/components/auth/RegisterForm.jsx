@@ -38,7 +38,7 @@ const submit = async (e) => {
         });
 
         console.log(responseData)
-        const { success, message } = responseData; 
+        const { message } = responseData; 
 
         if (success) { 
             toast.success(message || 'Registration successful!', { id: loadingToast });
