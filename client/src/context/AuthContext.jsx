@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }) => {
         
         if (res.data.user) {
           setUser(res.data.user);
+          fetchMe();
         } else {
           await fetchMe();
         }

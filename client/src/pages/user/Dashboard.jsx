@@ -11,11 +11,13 @@ import YearLongJourney from '../../components/YearLongJourney';
 import { FiClock, FiCalendar, FiRefreshCw, FiBookOpen, FiPlay , FiSun, FiCpu, FiHeart, FiTarget , FiActivity , FiZap } from "react-icons/fi";
 import SubscriptionPricing from '../../components/SubscriptionPricing';
 import BeyondTrialSection from '../../components/BeyondTrialSection';
-
+import { useAuth } from '../../hooks/useAuth';
 
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
+
+  const {fetchMe} =useAuth();
 
   const phrases = [
     "Sleep",
@@ -24,6 +26,10 @@ const Dashboard = () => {
     "Stress",
     "Depression"
   ];
+
+  useEffect(() => {
+    fetchMe();
+  },[])
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 800);
