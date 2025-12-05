@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
 
       console.log(res)
   
-      if (res.data && res.data.success) {
+      if (res.data) {
         localStorage.setItem('token', res.data.token);
         
         if (res?.data?.user) {
