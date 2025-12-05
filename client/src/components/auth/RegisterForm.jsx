@@ -31,6 +31,7 @@ export default function RegisterForm() {
 
       if(success){
         toast.success("Registered & Logged In!");
+        toast.success("user Registered")
         fetchMe();
         navigate("/");
       }
