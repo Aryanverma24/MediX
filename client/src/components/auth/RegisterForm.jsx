@@ -36,6 +36,9 @@ export default function RegisterForm() {
         password 
       });
 
+      console.log(success)
+      console.log(message)
+
       if (success) {
         toast.success(message || 'Registration successful!', { id: loadingToast });
         navigate('/'); // Redirect to home page after successful registration
