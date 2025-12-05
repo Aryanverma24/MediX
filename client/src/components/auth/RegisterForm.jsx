@@ -17,41 +17,40 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [loading,setLoading] = useState(false);
-
-  const submit = async (e) => {
+const submit = async (e) => {
     e.preventDefault();
     
     if (password !== confirm) {
-      toast.error("Passwords do not match");
-      return;
+        toast.error("Passwords do not match");
+        return;
     }
 
     const loadingToast = toast.loading('Creating your account...');
     setLoading(true);
     
     try {
-      const { success, message } = await registerUser({ 
-        name, 
-        email, 
-        password 
-      });
+        const responseData = await registerUser({ 
+            name, 
+            email, 
+            password 
+        });
 
-      if (message) {
-        toast.success(message || 'Registration successful!', { id: loadingToast });
-        navigate('/'); // Redirect to home page after successful registration
-      } else {
-        toast.error(message || 'Registration failed. Please try again.', { id: loadingToast });
-      }
+        const { success, message } = responseData; 
+
+        if (success) { 
+            toast.success(message || 'Registration successful!', { id: loadingToast });
+            navigate('/');
+        } else {
+            toast.error(message || 'Registration failed. Please try again.', { id: loadingToast });
+        }
     } catch (error) {
-      console.error('Registration error:', error);
-      const errorMessage = error?.response?.data?.message || 'An error occurred during registration';
-      toast.error(errorMessage, { id: loadingToast });
+        console.error('Registration error:', error);
+        const errorMessage = error?.message || 'An unexpected error occurred during registration.';
+        toast.error(errorMessage, { id: loadingToast });
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
-
-
+};
   {loading &&
     <Loader />
   }

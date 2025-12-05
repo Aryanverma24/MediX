@@ -79,25 +79,17 @@ export const AuthProvider = ({ children }) => {
       });
   
       if (res.data && res.data.success) {
-        // Store the token first
         localStorage.setItem('token', res.data.token);
         
-        // Update the user state
         if (res.data.user) {
           setUser(res.data.user);
         } else {
-          // If user data isn't in the initial response, fetch it
           await fetchMe();
         }
         
-        return { 
-          success: true, 
-          data: res.data,
-          message: 'Registration successful! Redirecting...'
-        };
+        return res.data
       }
       
-      // Handle case where response is successful but success flag is false
       const errorMessage = res.data?.message || 'Registration failed. Please try again.';
       return { 
         success: false, 
@@ -107,8 +99,8 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Registration error:", error);
       const errorMessage = error.response?.data?.message || 
-                         error.message || 
-                         "Registration failed. Please try again.";
+                             error.message || 
+                             "Registration failed. Please try again.";
       return {
         success: false,
         message: errorMessage
