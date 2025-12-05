@@ -209,18 +209,6 @@ function App() {
                ✅ USER ROUTES (Protected)
             ============================================ */}
 
-            <Route
-              path="/user"
-              element={
-                user?.role === "user" ? (
-                  <UserLayout>
-                    <Dashboard />
-                  </UserLayout>
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              }
-            />
 
             <Route
               path="/user/profile"

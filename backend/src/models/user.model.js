@@ -141,8 +141,8 @@ const userSchema = new mongoose.Schema(
       },
       stage: {
         type: String,
-        enum: ["seed", "sprout", "baby", "growing", "full"],
-        default: "seed",
+        enum: ["Seedling", "Sprout", "Baby Plant", "Plant", "Tree"],
+        default: "Seedling",
       },
       daysGrown: {
         type: Number,
@@ -179,7 +179,7 @@ const userSchema = new mongoose.Schema(
         },
         lifecycle: {
           type: String,
-          default: "completed",
+          default: "Tree",
         },
       },
     ],
@@ -235,7 +235,7 @@ userSchema.pre('save', function(next) {
 // =====================
 userSchema.pre('save', function(next) {
   if (this.isModified('currentTree.daysGrown')) {
-    const stages = ["seed", "sprout", "baby", "growing", "full"];
+    const stages = ["Seedling", "Sprout", "Baby Plant", "Plant", "Tree"];
     this.currentTree.stage = stages[this.currentTree.daysGrown] || "seed";
     this.currentTree.isReadyForForest = this.currentTree.daysGrown >= stages.length - 1;
   }
@@ -326,16 +326,16 @@ userSchema.methods.updateTreeGrowth = async function() {
     
     // Add your tree growth logic here based on consecutiveDays
     if(this.currentTree.consecutiveDays>=5){
-      this.currentTree.stage = "complete";
+      this.currentTree.stage = "Tree";
     }
     else if (this.currentTree.consecutiveDays === 4) {
-      this.currentTree.stage = "plant";
+      this.currentTree.stage = "Plant";
     } else if (this.currentTree.consecutiveDays === 3) {
-      this.currentTree.stage = "baby plant";
+      this.currentTree.stage = "Baby Plant";
     } else if (this.currentTree.consecutiveDays === 2) {
-      this.currentTree.stage = "sprout";
+      this.currentTree.stage = "Sprout";
     } else {
-      this.currentTree.stage = "seed";
+      this.currentTree.stage = "Seedling";
     }
     
     await this.save();
@@ -358,12 +358,12 @@ userSchema.methods.moveToForest = async function() {
     treeId: this.currentTree.treeId,
     completedAt: new Date(),
     totalDays: this.currentTree.consecutiveDays,
-    lifecycle: 'completed'
+    lifecycle: 'Tree'
   });
 
   this.currentTree = {
     treeId: crypto.randomUUID(),
-    stage: "seed",
+    stage: "Seedling",
     daysGrown: 0,
     consecutiveDays: 0,
     lastWatered: null,
@@ -378,8 +378,8 @@ userSchema.methods.moveToForest = async function() {
 // GET TREE STAGE
 // =====================
 userSchema.methods.getTreeStage = function () {
-  const stages = ["seed", "sprout", "baby", "growing", "full"];
-  return stages[this.currentTree.daysGrown] || "seed";
+  const stages = ["Seedling", "Sprout", "Baby Plant", "Plant", "Tree"];
+  return stages[this.currentTree.daysGrown] || "Seedling";
 };
 
 const User = mongoose.model("User", userSchema);

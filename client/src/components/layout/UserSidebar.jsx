@@ -18,17 +18,19 @@ import {
 import { MdDashboard } from "react-icons/md";
 import SidebarLink from "../ui/SidebarLink";
 import toast from "react-hot-toast";
+import Loader from "../ui/Loader";
 import { motion, AnimatePresence } from "framer-motion";
 
 const UserSidebar = () => {
   const { user, logout, fetchMe } = useAuth();
   const [openMenu, setOpenMenu] = useState(false);
+  const [loading,setLoading] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const menu = [
-    { icon: <MdDashboard />, label: "Dashboard", path: "/user" },
+    { icon: <MdDashboard />, label: "Dashboard", path: "/dashboard" },
     { icon: <FiUser />, label: "My Profile", path: "/user/profile" },
     { icon: <FiVideo />, label: "Join Meeting", path: "/join-meeting" },
     { icon: <FiCalendar />, label: "My Attendance", path: "/attendance" },
@@ -36,15 +38,21 @@ const UserSidebar = () => {
     //{ icon: <FiAward />, label: "Achievements", path: "/user/achievements" },
       ];
 
-  const handleLogout = async () => {
+  const handleLogout = async (e) => {
+    e.preventDefault();
     try {
+      setLoading(true);
       await logout();
       toast.success("User logged out");
       setOpenMenu(false)
     } catch (error) {
       toast.error("Logout failed");
+    }finally{
+      setLoading(false);
     }
   };
+
+  {loading && <Loader />}
 
   return (
     <>
