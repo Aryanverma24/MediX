@@ -17,6 +17,8 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [loading,setLoading] = useState(false);
+
+
 const submit = async (e) => {
     e.preventDefault();
     
@@ -39,7 +41,9 @@ const submit = async (e) => {
 
         if (success) { 
             toast.success(message || 'Registration successful!', { id: loadingToast });
-            navigate('/');
+           setTimeout(() => {
+        navigate('/');
+      }, 1000);
         } else {
             toast.error(message || 'Registration failed. Please try again.', { id: loadingToast });
         }
