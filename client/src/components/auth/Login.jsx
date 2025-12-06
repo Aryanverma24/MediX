@@ -15,7 +15,7 @@ export default function LoginForm() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-       const loadingToast = toast.loading('Logging in...');
+      const loadingToast = toast.loading('Logging in...');
       const response = await login({ email, password });
       if (response?.user) {
       toast.success("Logged in successfully!", { id: loadingToast });
@@ -23,10 +23,12 @@ export default function LoginForm() {
       navigate("/");// redirect after login
     } 
     else {
-      throw new Error(response?.message || "Login failed");
+        setEmail("")
+        setPassword("")
+        toast.error("Invalid email or password",{id : loadingToast});
     }
   }catch (err) {
-      toast.error(err?.response?.data?.message || "Login failed");
+      toast.error(err?.response?.data?.message || "Login failed",{id : loadingToast});
     }
   };
 
