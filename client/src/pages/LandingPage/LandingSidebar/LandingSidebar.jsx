@@ -114,60 +114,48 @@ const LandingSidebar = () => {
 
               {/* DROPDOWN — DESKTOP ONLY */}
               <AnimatePresence>
-  {/* Check if the user is logged in AND the profile menu should be open */}
-  {user?.name && profileOpen ? (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      className="absolute right-0 mt-2 w-48 bg-white/20 backdrop-blur-xl 
-        rounded-xl border border-white/20 shadow-lg p-2 z-50"
-    >
-      <button
-        onClick={() => {
-          navigate("/user/profile");
-          setProfileOpen(false);
-        }}
-        className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
-          hover:bg-white/10 rounded-lg"
-      >
-        <FiUser /> View Profile
-      </button>
+            
+                profileOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 mt-2 w-48 bg-white/20 backdrop-blur-xl 
+                      rounded-xl border border-white/20 shadow-lg p-2 z-50"
+                  >
+                    <button
+                      onClick={() => {
+                        navigate("/user/profile");
+                        setProfileOpen(false);
+                      }}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
+                        hover:bg-white/10 rounded-lg"
+                    >
+                      <FiUser /> View Profile
+                    </button>
 
-      <button
-        onClick={() => {
-          navigate("/user/settings");
-          setProfileOpen(false);
-        }}
-        className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
-          hover:bg-white/10 rounded-lg"
-      >
-        <FiSettings /> Settings
-      </button>
+                    <button
+                      onClick={() => {
+                        navigate("/user/settings");
+                        setProfileOpen(false);
+                      }}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
+                        hover:bg-white/10 rounded-lg"
+                    >
+                      <FiSettings /> Settings
+                    </button>
 
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-2 w-full px-3 py-2 text-red-400 
-          hover:bg-white/10 rounded-lg"
-      >
-        <FiLogOut /> Logout
-      </button>
-    </motion.div>
-  ) : (
-    /* Show "Join us" link if the user is NOT logged in (user?.name is false/undefined) 
-       or if the menu is not supposed to be open (though this usually only appears 
-       when the user is logged out) */
-    !user?.name && (
-      <>
-        <Link to="/auth/login">
-          <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">
-            Join us
-          </p>
-        </Link>
-      </>
-    )
-  )}
-</AnimatePresence>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 w-full px-3 py-2 text-red-400 
+                        hover:bg-white/10 rounded-lg"
+                    >
+                      <FiLogOut /> Logout
+                    </button>
+                  </motion.div>
+                )
+            
+              </AnimatePresence>
             </div>
           </div>
 

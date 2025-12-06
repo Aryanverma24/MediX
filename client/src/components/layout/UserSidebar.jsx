@@ -157,18 +157,8 @@ const UserSidebar = () => {
       </button>
     </motion.div>
   ) : (
-    /* Show "Join us" link if the user is NOT logged in (user?.name is false/undefined) 
-       or if the menu is not supposed to be open (though this usually only appears 
-       when the user is logged out) */
-    !user?.name && (
-      <>
-        <Link to="/auth/login">
-          <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">
-            Join us
-          </p>
-        </Link>
-      </>
-    )
+   <>
+   </>
   )}
 </AnimatePresence>
             </div>
@@ -211,7 +201,7 @@ const UserSidebar = () => {
                 </motion.button>
               ))}
 
-             {user?.name ? (
+             {user?.name && (
               <>
                  <button
                       onClick={() => {
@@ -231,9 +221,6 @@ const UserSidebar = () => {
                 <FiLogOut /> Logout
               </button>
               </>
-             ) :(
-                 <Link to="/auth/login">
-                  <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">Join us</p></Link>              
              )}
 
               {/* Mobile User Info */}
