@@ -91,7 +91,9 @@ const UserSidebar = () => {
 
             {/* Desktop Profile Button + Dropdown */}
             <div className="relative hidden md:block">
-              <button
+              {user?.name ? (
+                <>
+                <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="ml-4 flex items-center gap-3 bg-white/10 px-3 py-2 rounded-xl 
                   backdrop-blur-lg border border-white/20 hover:bg-white/20 transition"
@@ -105,51 +107,70 @@ const UserSidebar = () => {
                   <p className="text-xs text-orange-400">{user?.email}</p>
                 </div>
               </button>
+                </>
+              ) : (
+                 <>
+                                  <Link to="/auth/login">
+                                  <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">Join us</p></Link>
+                   </>
+              ) }
 
               {/* DROPDOWN — DESKTOP ONLY */}
-              <AnimatePresence>
-                {profileOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 mt-2 w-48 bg-white/20 backdrop-blur-xl 
-                      rounded-xl border border-white/20 shadow-lg p-2 z-50"
-                  >
-                    <button
-                      onClick={() => {
-                        navigate("/user/profile");
-                        setOpenMenu(false);
-                        setProfileOpen(false);
-                      }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
-                        hover:bg-white/10 rounded-lg"
-                    >
-                      <FiUser /> View Profile
-                    </button>
+             <AnimatePresence>
+  {/* Check if the user is logged in AND the profile menu should be open */}
+  {user?.name && profileOpen ? (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="absolute right-0 mt-2 w-48 bg-white/20 backdrop-blur-xl 
+        rounded-xl border border-white/20 shadow-lg p-2 z-50"
+    >
+      <button
+        onClick={() => {
+          navigate("/user/profile");
+          setProfileOpen(false);
+        }}
+        className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
+          hover:bg-white/10 rounded-lg"
+      >
+        <FiUser /> View Profile
+      </button>
 
-                    <button
-                      onClick={() => {
-                        navigate("/user/settings");
-                        setOpenMenu(false)
-                        setProfileOpen(false);
-                      }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
-                        hover:bg-white/10 rounded-lg"
-                    >
-                      <FiSettings /> Settings
-                    </button>
+      <button
+        onClick={() => {
+          navigate("/user/settings");
+          setProfileOpen(false);
+        }}
+        className="flex items-center gap-2 w-full px-3 py-2 text-orange-700 
+          hover:bg-white/10 rounded-lg"
+      >
+        <FiSettings /> Settings
+      </button>
 
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-red-400 
-                        hover:bg-white/10 rounded-lg"
-                    >
-                      <FiLogOut /> Logout
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-2 w-full px-3 py-2 text-red-400 
+          hover:bg-white/10 rounded-lg"
+      >
+        <FiLogOut /> Logout
+      </button>
+    </motion.div>
+  ) : (
+    /* Show "Join us" link if the user is NOT logged in (user?.name is false/undefined) 
+       or if the menu is not supposed to be open (though this usually only appears 
+       when the user is logged out) */
+    !user?.name && (
+      <>
+        <Link to="/auth/login">
+          <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">
+            Join us
+          </p>
+        </Link>
+      </>
+    )
+  )}
+</AnimatePresence>
             </div>
           </div>
 
@@ -175,7 +196,6 @@ const UserSidebar = () => {
               border-white/20 fixed top-[60px] left-0 w-full z-40"
           >
             <div className="flex flex-col p-4 space-y-3">
-
               {menu.map((item, i) => (
                 <motion.button
                   key={i}
@@ -191,7 +211,9 @@ const UserSidebar = () => {
                 </motion.button>
               ))}
 
- <button
+             {user?.name ? (
+              <>
+                 <button
                       onClick={() => {
                         navigate("/user/settings");
                         setProfileOpen(false);
@@ -208,17 +230,30 @@ const UserSidebar = () => {
               >
                 <FiLogOut /> Logout
               </button>
+              </>
+             ) :(
+                 <Link to="/auth/login">
+                  <p className="text-sm bg-orange-500 px-3 py-2 rounded-full font-semibold text-orange-100">Join us</p></Link>              
+             )}
 
               {/* Mobile User Info */}
-              <div className="flex items-center gap-3 pt-3 border-t border-white/20">
+           {user?.name ?  (
+            <>
+               <div className="flex items-center gap-3 pt-3 border-t border-white/20">
                 <div className="w-10 h-10 bg-orange-200 text-orange-700 rounded-full flex items-center justify-center font-bold">
                   {user?.name?.charAt(0)}
                 </div>
-                <div>
+                <div> 
                   <p className="font-medium text-orange-700 text-md">{user?.name}</p>
                   <p className="text-orange-600 text-xs">{user?.email}</p>
                 </div>
               </div>
+            </>
+           ) : (
+            <>
+
+            </>
+           )}
             </div>
           </motion.div>
         )}
