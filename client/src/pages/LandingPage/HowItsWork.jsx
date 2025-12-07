@@ -70,7 +70,7 @@ const HowItWorks = () => {
             y: 80,
             duration: 1,
             
-            ease: "bounce.out",
+            ease: "power4.out",
             scrollTrigger : {
                 trigger : cardContainerRef.current,
                 start: "top 80%",
