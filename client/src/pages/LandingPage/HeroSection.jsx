@@ -1,9 +1,10 @@
 import React, { useRef } from 'react'
 import { BsStars } from "react-icons/bs";
 import { Link } from 'react-router-dom';
-import heroImage from "../../assets/hero-meditate.jpg"
+import heroImage from "../../assets/hero.png"
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { motion } from 'framer-motion'
 
 const HeroSection = () => {
 
@@ -62,74 +63,95 @@ const HeroSection = () => {
     });
 
     return (
-        <section className="min-h-screen w-full bg-white/20 flex items-center">
-            <div className="max-w-7xl mx-auto w-full px-5 md:px-10 py-10">
-                <div className="flex flex-col md:flex-row items-center gap-12">
+        <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+            {/* Background Image with Overlay */}
+            <div className="absolute inset-0 z-0">
+                <img 
+                    src={heroImage} 
+                    alt="Peaceful meditation background"
+                    className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-900/80 via-orange-800/70 to-orange-900/80"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-950/90 via-transparent to-orange-950/90"></div>
+            </div>
 
-                    {/*  LEFT SECTION */}
-                    <div className="w-full md:w-1/2 text-center md:text-left">
-
-                        {/* Google badge */}
-                        <div
-                            ref={Startups}
-                            className="mx-auto md:mx-0 mb-6 bg-orange-200 text-orange-600 w-fit px-5 py-8 md:py-2 rounded-xl text-sm font-semibold flex items-center gap-2"
-                        >
-                            <BsStars />
-                            Google Startups Member
-                        </div>
-
-                        {/* Heading */}
-                        <h1 
-                        ref={headingRef}
-                        className="flex flex-wrap justify-center md:justify-start text-5xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold text-orange-600">
-                            Avaykt-Ehsaas
-                        </h1>
-
-                        {/* Paragraph */}
-                        <div ref={paraRef} className="mt-6 space-y-4">
-                            <h3 className='text-base sm:text-lg md:text-xl text-amber-700 font-medium'>
-                                Meditation Backed by Neuroscience
-                            </h3>
-                            <p className='text-sm sm:text-base md:text-lg text-gray-700 font-medium max-w-xl mx-auto md:mx-0'>
-                                <i>
-                                    Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
-                                </i>
-                            </p>
-                        </div>
-
-                        {/* Buttons */}
-                        <div className='mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4'>
-                            <Link
-                                to={"/user"}
-                                className='btn px-6 py-3 text-center rounded-xl bg-gradient-to-r from-orange-200 to-amber-400 text-orange-700 hover:scale-105 hover:text-stone-900 transition-all font-semibold w-48'
-                            >
-                                Join Session
-                            </Link>
-
-                            <Link
-                                to={"/user"}
-                                className='btn px-6 py-3 text-center rounded-xl bg-gradient-to-r from-orange-400 to-amber-200 text-stone-800 hover:scale-105 hover:text-white transition-all font-semibold w-48'
-                            >
-                                Explore Courses
-                            </Link>
-                        </div>
-
-                    </div>
-
-                    {/* 🟦 RIGHT SECTION */}
-                    <div
-                        ref={imgRef}
-                        className="w-full mt-10 md:mt-0 md:w-1/2 flex justify-center"
+            {/* Content */}
+            <div className="relative z-10 max-w-7xl w-full px-5 md:px-10 py-20">
+                <div className="max-w-3xl">
+                    {/* Google badge */}
+                    <motion.div
+                        ref={Startups}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                        className="mb-8 bg-orange-500/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
                     >
-                        <div className="w-full max-w-md md:max-w-lg lg:max-w-xl">
-                            <img
-                                src={heroImage}
-                                alt="hero image"
-                                className="rounded-3xl w-full h-auto object-cover shadow-xl"
-                            />
-                        </div>
-                    </div>
+                        <BsStars className="text-yellow-300" />
+                        Google Startups Member
+                    </motion.div>
 
+                    {/* Heading */}
+                    <motion.h1 
+                        ref={headingRef}
+                        className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold text-white mb-6 leading-tight"
+                    >
+                        Avaykt-Ehsaas
+                    </motion.h1>
+
+                    {/* Paragraph */}
+                    <motion.div 
+                        ref={paraRef} 
+                        className="space-y-6 max-w-2xl"
+                    >
+                        <motion.h3 
+                            className='text-xl sm:text-2xl md:text-3xl text-amber-200 font-medium'
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            Meditation Backed by Neuroscience
+                        </motion.h3>
+                        <motion.p 
+                            className='text-lg sm:text-xl text-orange-100 font-medium'
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                        >
+                            Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
+                        </motion.p>
+                    </motion.div>
+
+                    {/* Buttons */}
+                    <motion.div 
+                        className='mt-10 flex flex-wrap gap-6'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                    >
+                        <Link 
+                            to="/register" 
+                            className='px-10 py-4 bg-orange-500 text-white rounded-full font-bold text-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-orange-500/30'
+                        >
+                            Start Your Journey
+                        </Link>
+                        <Link 
+                            to="/about" 
+                            className='px-10 py-4 border-2 border-white text-white rounded-full font-bold text-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all duration-300 transform hover:scale-105'
+                        >
+                            Learn More
+                        </Link>
+                    </motion.div>
+
+                </div>
+            </div>
+            
+            {/* Decorative elements */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/80 text-sm animate-bounce">
+                <div className="flex flex-col items-center">
+                    <span>Scroll to explore</span>
+                    <svg className="w-6 h-6 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
                 </div>
             </div>
         </section>
