@@ -5,42 +5,32 @@ import Button from "../ui/Button";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import TextLoader from "../ui/TextLoader";
 
 export default function LoginForm() {
   const { user, login, isloading , fetchMe } = useAuth(); // get login function & loading state from context
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [lodingText,setLoadingText] = useState(false);
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
-    setLoadingText(true);
     try {
       const loadingToast = toast.loading('Logging in...');
       const response = await login({ email, password });
       if (response?.user) {
       toast.success("Logged in successfully!", { id: loadingToast });
       await new Promise(resolve => setTimeout(resolve, 500));
-      setLoadingText(false);
       navigate("/");// redirect after login
     } 
     else {
         setEmail("")
         setPassword("")
-        setLoadingText(false);
         toast.error("User not Found",{id : loadingToast});
     }
   }catch (err) {
       toast.error(err?.response?.data?.message || "Login failed",{id : loadingToast});
     }
   };
-
-if(loadingText){
-  return <TextLoader />
-}
-
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center p-4">
