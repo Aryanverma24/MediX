@@ -37,8 +37,8 @@ export default function LoginForm() {
     }
   };
 
-{lodingText &&
-  <TextLoader />
+if(loadingText){
+  return <TextLoader />
 }
 
 
