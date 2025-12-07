@@ -33,7 +33,7 @@ const LandingSidebar = () => {
 
 
       const sidebarRef = useRef(null);
-      const handleLogout = async () => {
+      const handleLogout = async (e) => {
          e.preventDefault();
             try {
               setLoading(true);
