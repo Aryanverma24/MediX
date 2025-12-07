@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import API from "../utils/api";
 import { MessageSquare } from "lucide-react";
+import TextLoader from "../components/ui/TextLoader";
 
 export const AuthContext = createContext();
 
@@ -172,7 +173,7 @@ export const AuthProvider = ({ children }) => {
         loading: loadingUser
       }}
     >
-      {loadingUser ? <div>Loading Authentication...</div> : children}
+      {loadingUser ? <TextLoader /> : children}
     </AuthContext.Provider>
   )
 }
