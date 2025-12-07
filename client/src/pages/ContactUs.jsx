@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi'
-import Footer from "./LandingPage/Footer"
+import Footer from "./LandingPage/Footer/jsx"
+import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
 
 const ContactUs = () => {
 
@@ -24,6 +25,8 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+
+    <LandingSidebar />
 
       {/* HERO */}
       <section className="relative py-24 bg-gradient-to-br from-white via-[#fff7ed] to-white overflow-hidden">

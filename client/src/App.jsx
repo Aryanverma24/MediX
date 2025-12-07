@@ -27,6 +27,7 @@ import AdminLayout from "./components/layout/AdminLayout";
 import UserLayout from "./components/layout/UserLayout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   const { user, loadingUser } = useAuth();
@@ -75,7 +76,8 @@ function App() {
                 )
               }
             />
-
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
             {/* ===========================================
                ✅ PROTECTED DASHBOARD ROUTE
             ============================================ */}
@@ -94,7 +96,7 @@ function App() {
               }
             />
 
-            <Route path="/contact" element={<ContactUs />} />
+
 
             {/* ===========================================
                ✅ ADMIN ROUTES (Protected)
