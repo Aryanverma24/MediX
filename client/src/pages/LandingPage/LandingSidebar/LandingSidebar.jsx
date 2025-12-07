@@ -33,12 +33,14 @@ const LandingSidebar = () => {
       const sidebarRef = useRef(null);
       const handleLogout = async () => {
         try {
-          await logout();
+          const res = await logout();
+          toast.loading("Logging out...");
           profileOpen(false)
           openMenu(false)
-          toast.success("User logged out");
+          toast.success("User logged out" , {id : toast.loading("Logging out...")
+          });
         } catch (error) {
-          toast.error("Logout failed");
+          toast.error("Logout failed" , {id : toast.loading("Logging out...")});
         }
       };
 
