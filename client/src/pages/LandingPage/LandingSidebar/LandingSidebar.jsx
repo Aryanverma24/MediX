@@ -17,7 +17,7 @@ const LandingSidebar = () => {
      const { user, logout, fetchMe } = useAuth();
       const [openMenu, setOpenMenu] = useState(false);
       const [profileOpen, setProfileOpen] = useState(false);
-      const [loading,setLoading] = useState(false);
+    
       const navigate = useNavigate();
 
       useGSAP(() => {
@@ -36,15 +36,12 @@ const LandingSidebar = () => {
       const handleLogout = async (e) => {
          e.preventDefault();
             try {
-              setLoading(true);
               await logout();
               toast.success("User logged out");
               setOpenMenu(false)
               profileOpen(false)
             } catch (error) {
-              toast.error("Logout failed");
-            }finally{
-              setLoading(false);
+              toast.error("Logout failed", error);
             }
       };
 
@@ -57,11 +54,7 @@ const LandingSidebar = () => {
          { icon: <FiPhoneCall />, label: "Contact", path: "/contact" },
     ]
 
-    if(loading) {
-      return <TextLoader />
-    }
-
-  return (
+     return (
     <>
        {/* TOP NAVBAR */}
      <div ref={sidebarRef} className="fixed top-0 left-0 w-full backdrop-blur-xl bg-gradient-to-r from-orange-50/80 via-amber-50/80 to-orange-100/70 border-b border-orange-200/60 shadow-lg z-50">
