@@ -5,14 +5,11 @@ import TextLoader from "../components/ui/TextLoader";
 
 export const AuthContext = createContext();
 
-const MINIMUM_LOAD_TIME = 3000;
-
 export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [minimumTimeElapsed, setMinimumTimeElapsed] = useState(false);
-
+ 
   const fetchMe = async () => {
     const token = localStorage.getItem("token");
 
@@ -51,13 +48,7 @@ export const AuthProvider = ({ children }) => {
     fetchMe();
   }, [])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMinimumTimeElapsed(true);
-    }, MINIMUM_LOAD_TIME);
-    return () => clearTimeout(timer);
-  }, []);
-
+  
 
   const login = async (data) => {
     try {
@@ -171,8 +162,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const showLoader = loadingUser || !minimumTimeElapsed;
-
+  
   return (
     <AuthContext.Provider
       value={{
@@ -185,7 +175,7 @@ export const AuthProvider = ({ children }) => {
         fetchMe,
         loading: loadingUser
       }}
-    >{showLoader ? <TextLoader /> : children}
+    >{loadingUser ? <TextLoader /> : children}
     </AuthContext.Provider>
   )
 }

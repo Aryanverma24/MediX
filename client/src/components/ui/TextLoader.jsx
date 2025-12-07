@@ -13,7 +13,7 @@ const meditationMessages = [
 ];
 
 // Configuration
-const INTERVAL_TIME_MS = 500; // Change message every 3 seconds
+const INTERVAL_TIME_MS = 1000; // Change message every 3 seconds
 
 const TextLoader = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);

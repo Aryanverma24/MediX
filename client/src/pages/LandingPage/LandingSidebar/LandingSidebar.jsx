@@ -11,11 +11,13 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import {toast}  from 'react-hot-toast'
+import TextLoader from '../../../components/ui/TextLoader'
 
 const LandingSidebar = () => {
      const { user, logout, fetchMe } = useAuth();
       const [openMenu, setOpenMenu] = useState(false);
       const [profileOpen, setProfileOpen] = useState(false);
+      const [loading,setLoading] = useState(false);
       const navigate = useNavigate();
 
       useGSAP(() => {
@@ -32,16 +34,18 @@ const LandingSidebar = () => {
 
       const sidebarRef = useRef(null);
       const handleLogout = async () => {
-        try {
-          const res = await logout();
-          toast.loading("Logging out...");
-          profileOpen(false)
-          openMenu(false)
-          toast.success("User logged out" , {id : toast.loading("Logging out...")
-          });
-        } catch (error) {
-          toast.error("Logout failed" , {id : toast.loading("Logging out...")});
-        }
+         e.preventDefault();
+            try {
+              setLoading(true);
+              await logout();
+              toast.success("User logged out");
+              setOpenMenu(false)
+              profileOpen(false)
+            } catch (error) {
+              toast.error("Logout failed");
+            }finally{
+              setLoading(false);
+            }
       };
 
     const menu = [
@@ -52,6 +56,10 @@ const LandingSidebar = () => {
          { icon: <BiMessageSquareDetail />, label: "About", path: "/about" },
          { icon: <FiPhoneCall />, label: "Contact", path: "/contact" },
     ]
+
+    if(loading) {
+      return <TextLoader />
+    }
 
   return (
     <>
