@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi'
-import Footer from "./LandingPage/Footer/jsx"
+import Footer from "./LandingPage/Footer"
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
 
 const ContactUs = () => {
