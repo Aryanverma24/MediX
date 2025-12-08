@@ -71,8 +71,8 @@ const HeroSection = () => {
                     alt="Peaceful meditation background"
                     className="w-full h-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-900/80 via-orange-800/70 to-orange-900/80"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-950/90 via-transparent to-orange-950/90"></div>
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-orange-900/80 via-orange-800/70 to-orange-900/80"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-950/90 via-transparent to-orange-950/90"></div> */}
             </div>
 
             {/* Content */}
