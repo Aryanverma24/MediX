@@ -1,26 +1,18 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react'
 import { BsStars } from "react-icons/bs";
-import { FaUniversity } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import heroImage from "../../assets/hero.png";
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { motion, AnimatePresence } from 'framer-motion';
+import heroImage from "../../assets/hero.png"
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { motion } from 'framer-motion'
 
 const HeroSection = () => {
-    const [showParagraph, setShowParagraph] = useState(true);
+
     const Startups = useRef(null);
     const headingRef = useRef([]);
     const paraRef = useRef(null);
-    const imgRef = useRef(null);
+    const imgRef = useRef(null)
     const badgesRef = useRef(null);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowParagraph(false);
-        }, 5000); // Hide paragraph after 5 seconds
-        return () => clearTimeout(timer);
-    }, []);
 
     const text = "Avaykt-Ehsaas";
 
@@ -30,25 +22,24 @@ const HeroSection = () => {
             opacity: 0,
             duration: 0.8,
             ease: "power4.out",
-        });
+        })
 
-        gsap.from(paraRef.current?.children || [], {
+        gsap.from(paraRef.current.children, {
             x: -120,
             opacity: 0,
             duration: 1.6,
             ease: "power3.out",
             stagger: 0.1,
             delay: 0.4
-        });
+        })
 
-        gsap.from(badgesRef.current?.children || [], {
+        gsap.from(Startups.current, {
             opacity: 0,
             y: 20,
             duration: 1,
             delay: 1.2,
             ease: "power3.out",
-            stagger: 0.2
-        });
+        })
 
         gsap.fromTo(".btn",
             { opacity: 0, y: 30, scale: 0.9 },
@@ -61,7 +52,7 @@ const HeroSection = () => {
                 stagger: 0.2,
                 ease: "power4.out"
             }
-        );
+        )
 
         gsap.from(imgRef.current, {
             opacity: 0,
@@ -69,7 +60,15 @@ const HeroSection = () => {
             duration: 1,
             delay: 1.4,
             ease: "power3.out",
-        });
+        })
+
+        gsap.from(badgesRef.current,{
+            opacity : 0,
+            y : 40,
+            duration : 1,
+            delay:1,
+            ease : "power4.out"
+        })
     });
 
     return (
@@ -80,34 +79,23 @@ const HeroSection = () => {
                     src={heroImage} 
                     alt="Peaceful meditation background"
                     className="w-full h-full object-cover object-center"
-                    ref={imgRef}
                 />
             </div>
 
             {/* Content */}
             <div className="relative z-10 max-w-7xl w-full px-5 md:px-10 py-20">
                 <div className="max-w-3xl">
-                    {/* Badges Container */}
-                    <div className="flex flex-wrap gap-4 mb-8" ref={badgesRef}>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
-                            className="bg-orange-500/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
-                        >
-                            <BsStars className="text-yellow-300" />
-                            Google Startups Member
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
-                            className="bg-blue-600/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
-                        >
-                            <FaUniversity className="text-white" />
-                            IIT Mandi Incubation
-                        </motion.div>
-                    </div>
+                    {/* Google badge */}
+                    <motion.div
+                        ref={Startups}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                        className="mb-8 bg-orange-500/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
+                    >
+                        <BsStars className="text-yellow-300" />
+                        Google Startups Member
+                    </motion.div>
 
                     {/* Heading */}
                     <motion.h1 
@@ -117,32 +105,28 @@ const HeroSection = () => {
                         Avaykt-Ehsaas
                     </motion.h1>
 
-                    {/* Paragraph with animation */}
-                    <AnimatePresence>
-                        {showParagraph && (
-                            <motion.div 
-                                ref={paraRef}
-                                initial={{ opacity: 1 }}
-                                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                                transition={{ duration: 0.5 }}
-                                className="overflow-hidden"
-                            >
-                                <div className="text-lg text-white/90 mb-8 max-w-2xl space-y-4">
-                                    <p>Your personal mental health companion, offering AI-powered support and resources to help you navigate life's challenges with confidence and resilience.</p>
-                                    <p>Start your journey to better mental well-being today.</p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    <motion.p 
-                        className="text-lg text-white/80 mb-8 max-w-2xl"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
+                    {/* Paragraph */}
+                    <motion.div 
+                        ref={paraRef} 
+                        className="space-y-6 max-w-2xl"
                     >
-                        Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
-                    </motion.p>
+                        <motion.h3 
+                            className='text-xl sm:text-2xl md:text-3xl text-amber-200 font-medium'
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            Meditation Backed by Neuroscience
+                        </motion.h3>
+                        <motion.p 
+                            className='text-lg sm:text-xl text-orange-100 font-medium'
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                        >
+                            Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
+                        </motion.p>
+                    </motion.div>
 
                     {/* Buttons */}
                     <motion.div 
@@ -177,6 +161,27 @@ const HeroSection = () => {
                     </svg>
                 </div>
             </div>
+              <div className="flex flex-wrap gap-4 mb-8" ref={badgesRef}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3, duration: 0.8 }}
+                            className="bg-orange-500/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
+                        >
+                            <img href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Google_for_Startups_logo.svg/1200px-Google_for_Startups_logo.svg.png?20201222111427"
+                                className="text-yellow-300" />
+                            Google Startups Member
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            className="bg-blue-600/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
+                        >
+                            <FaUniversity className="text-white" />
+                            IIT Mandi Incubation
+                        </motion.div>
+                    </div>
         </section>
     )
 }
