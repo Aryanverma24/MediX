@@ -178,7 +178,8 @@ const HeroSection = () => {
                             transition={{ delay: 0.5, duration: 0.8 }}
                             className="bg-blue-600/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
                         >
-                            <FaUniversity className="text-white" />
+                            <img href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdXb6yFb5UMer8xTSJDmGH5ogfDqA3h7O6Yw&s"
+                                className="text-white" />
                             IIT Mandi Incubation
                         </motion.div>
                     </div>
