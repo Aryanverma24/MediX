@@ -82,7 +82,11 @@ function App() {
             {/* ===========================================
                ✅ PROTECTED DASHBOARD ROUTE
             ============================================ */}
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/dashboard" element={
+              <AdminLayout>
+              <AdminDashboard />}
+              </AdminLayout>
+               />
             <Route
               path="/dashboard"
               element={
