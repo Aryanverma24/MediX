@@ -78,10 +78,11 @@ function App() {
             />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
+
             {/* ===========================================
                ✅ PROTECTED DASHBOARD ROUTE
             ============================================ */}
-
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route
               path="/dashboard"
               element={
