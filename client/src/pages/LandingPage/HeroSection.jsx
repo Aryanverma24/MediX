@@ -87,27 +87,24 @@ const HeroSection = () => {
             <div className="relative z-10 max-w-7xl w-full px-5 md:px-10 py-20">
                 <div className="max-w-3xl">
                     {/* Google badge */}
-                    <motion.div
+                    <div
                         ref={Startups}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
                         className="mb-8 bg-orange-500/80 text-white w-fit px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm"
                     >
                         <BsStars className="text-yellow-300" />
                         Google Startups Member
-                    </motion.div>
+                    </div>
 
                     {/* Heading */}
-                    <motion.h1 
+                    <h1 
                         ref={headingRef}
                         className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold text-white mb-6 leading-tight"
                     >
                         Avaykt-Ehsaas
-                    </motion.h1>
+                    </h1>
 
                     {/* Paragraph */}
-                    <motion.div 
+                    <div 
                         ref={paraRef} 
                         className="space-y-6 max-w-2xl"
                     >
@@ -127,7 +124,7 @@ const HeroSection = () => {
                         >
                             Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
                         </motion.p>
-                    </motion.div>
+                    </div>
 
                     {/* Buttons */}
                     <motion.div 
