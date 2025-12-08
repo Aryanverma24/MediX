@@ -10,7 +10,6 @@ const HeroSection = () => {
 
     const Startups = useRef(null);
     const headingRef = useRef([]);
-    const paraRef = useRef(null);
     const imgRef = useRef(null)
     const badgesRef = useRef(null);
 
@@ -22,15 +21,6 @@ const HeroSection = () => {
             opacity: 0,
             duration: 0.8,
             ease: "power4.out",
-        })
-
-        gsap.from(paraRef.current.children, {
-            x: -120,
-            opacity: 0,
-            duration: 1.6,
-            ease: "power3.out",
-            stagger: 0.1,
-            delay: 0.4
         })
 
         gsap.from(Startups.current, {
@@ -105,7 +95,6 @@ const HeroSection = () => {
 
                     {/* Paragraph */}
                     <div 
-                        ref={paraRef} 
                         className="space-y-6 max-w-2xl"
                     >
                         <motion.h3 
