@@ -87,7 +87,7 @@ const Sidebar = () => {
           onClick={() => setOpen(!open)}
           className="fixed top-4 left-4 z-50 p-2 rounded-md text-gray-600 hover:bg-green-100 transition-colors bg-white shadow-md md:hidden"
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={24} className='z-index-10' /> : <Menu size={24} className='z-index-10'/>}
         </button>
       )}
 
@@ -110,10 +110,11 @@ const Sidebar = () => {
           <motion.div
             ref={sidebarRef}
             className={`fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-white to-green-50 shadow-lg border-r border-green-100 flex flex-col z-50 transform transition-transform duration-300 ease-in-out`}
-            initial={{ x: -300 }}
-            animate={{ x: 0 }}
-            exit={{ x: -300 }}
-            transition={{ type: 'spring', stiffness: 100, damping: 25 }}
+          initial={{ x: '-100%' }}
+animate={{ x: 0 }}
+exit={{ x: '-100%' }}
+transition={{ duration: 0.18, ease: 'easeOut' }}
+
           >
             <div className="p-6 pb-4 overflow-hidden flex flex-col h-full">
               {/* Logo */}

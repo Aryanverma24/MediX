@@ -41,7 +41,7 @@ export default function AdminDashboard() {
     const dashboardData = DUMMY_DASHBOARD_DATA;
 
     return (
-        <div className="admin-scroll ml-[18rem] p-10 min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
+        <div className="admin-scroll ml-1 md:ml-[18rem] p-10 min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
             <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
