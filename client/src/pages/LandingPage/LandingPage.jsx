@@ -20,7 +20,7 @@ const LandingPage = () => {
       <HowItWorks />
       <ProgramsAndBenefits />
       <TestimonialCarousel />
-      <Mentors />
+      {/* <Mentors /> */}
       <FAQJoin />
       <Footer />
     </div>
