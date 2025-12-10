@@ -49,19 +49,24 @@ export default function AdminDashboard() {
     const dashboardData = DUMMY_DASHBOARD_DATA;
 
     // Calculate active users (users with active subscription in last 21 days)
-    const calculateActiveUsers = (users) => {
-        if (!users || !Array.isArray(users)) return 0;
+   const calculateActiveUsers = (users) => {
+    if (!users || !Array.isArray(users)) return 0;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+    
+    return users.filter(user => {
+        if (!user.subscription?.endDate) return false;
+        const endDate = new Date(user.subscription.endDate);
+        endDate.setHours(0, 0, 0, 0); // Reset time to start of day
         
-        const today = new Date();
-        return users.filter(user => {
-            if (!user.subscription?.endDate) return false;
-            const endDate = new Date(user.subscription.endDate);
-            const diffTime = today - endDate;
-            const diffDays = diffTime / (1000 * 60 * 60 * 24);
-            return diffDays >= 0 && diffDays <= 21;
-        }).length;
-    };
-
+        const timeDiff = endDate - today;
+        const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        
+        // Return true if subscription ends today or in the next 21 days
+        return diffDays >= 0 && diffDays <= 21;
+    }).length;
+};
     // Fetch users and calculate active users
     useEffect(() => {
         const fetchUsers = async () => {
