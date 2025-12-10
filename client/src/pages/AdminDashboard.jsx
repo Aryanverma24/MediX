@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { motion } from "framer-motion";
 import { Users, BarChart3, Activity, Calendar, Settings, Shield, Zap, TrendingUp, Clock } from "lucide-react";
 import API from "../utils/api";
+import toast from "react-hot-toast";
 
 const DUMMY_DASHBOARD_DATA = {
     totalUsers: 12450,
@@ -46,7 +47,6 @@ export default function AdminDashboard() {
     const dashboardData = DUMMY_DASHBOARD_DATA;
 
     useEffect(() =>{
-
         const fetchTotalUser =  async() => {
             try {
                const response = await API.get('/user/getUsers')
@@ -54,6 +54,7 @@ export default function AdminDashboard() {
                console.log(users);
                console.log(totalUsers);
                setTotalUsers(users.length)
+            toast.success("users fetched")
             } catch (error) {
                 toast.error(error,"unable to fetch total users")
             }
