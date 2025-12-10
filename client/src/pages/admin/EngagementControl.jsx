@@ -94,7 +94,7 @@ const EngagementControl = () => {
   };
 
   return (
-    <div className="admin-scroll p-6 min-h-screen ml-2 md:ml-[18rem] bg-gradient-to-br from-green-50 via-cream-50 to-white">
+    <div className="admin-scroll p-6 min-h-screen md:ml-[18rem] bg-gradient-to-br from-green-50 via-cream-50 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">

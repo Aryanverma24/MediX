@@ -7,7 +7,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
-// ✅ Modern Stat Card (No CountUp)
+// ✅ Modern Stat Card
 const StatCard = ({ title, value, icon, color }) => {
   return (
     <motion.div
@@ -36,18 +36,18 @@ const Analytics = () => {
   });
 
   return (
-    <div className="admin-scroll min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white p-8  ml-2 md:ml-[18rem] text-gray-800">
+    <div className="admin-scroll min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white p-6 sm:p-8 w-full text-gray-800 transition-all duration-300 md:ml-[18rem]">
 
-      {/* ✅ Title */}
+      {/* Title */}
       <motion.h1
-        className="text-4xl font-extrabold mb-8 bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent"
+        className="text-3xl sm:text-4xl font-extrabold mb-8 bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent"
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
       >
         Analytics Dashboard
       </motion.h1>
 
-      {/* ✅ Top Stats */}
+      {/* Top Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <StatCard
           title="Total Users"
@@ -72,14 +72,13 @@ const Analytics = () => {
 
         <StatCard
           title="Growth Rate %"
-          value={`${data.growth}%`}
+          value={data.growth}
           icon={<FaChartLine />}
           color="text-green-600"
         />
-
       </div>
 
-      {/* ✅ Left & Right Section */}
+      {/* Middle Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-16">
 
         {/* LEFT */}
@@ -93,7 +92,7 @@ const Analytics = () => {
             User Growth
           </h2>
 
-          <div className="w-full h-fit bg-green-50/50 rounded-lg flex items-center justify-center text-green-500 border-2 border-dashed border-green-200">
+          <div className="w-full h-full bg-green-50/50 rounded-lg flex items-center justify-center text-green-500 border-2 border-dashed border-green-200">
             User Growth Graph
           </div>
         </motion.div>
@@ -121,7 +120,6 @@ const Analytics = () => {
             <p className="mt-4 text-green-500 bg-green-50 px-3 py-1 rounded-full text-sm font-medium">
               +18% higher than last month
             </p>
-
           </div>
         </motion.div>
 
