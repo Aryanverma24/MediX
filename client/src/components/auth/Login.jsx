@@ -20,7 +20,7 @@ export default function LoginForm() {
       if (response?.user) {
       toast.success("Logged in successfully!", { id: loadingToast });
       await new Promise(resolve => setTimeout(resolve, 500));
-      navigate("/");// redirect after login
+      navigate("/join-meeting");// redirect after login
     } 
     else {
         setEmail("")

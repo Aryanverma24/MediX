@@ -52,6 +52,16 @@ const LandingSidebar = () => {
          { icon: <FiSunrise />, label: "Live-session", path: "/dashboard" },
          { icon: <BiMessageSquareDetail />, label: "About", path: "/about" },
          { icon: <FiPhoneCall />, label: "Contact", path: "/contact" },
+
+           ...(user?.role === "admin"
+      ? [
+          {
+            icon: <MdDashboard />,
+            label: "Admin Panel",
+            path: "/admin/dashboard",
+          },
+        ]
+      : []),
     ]
 
      return (
@@ -199,6 +209,20 @@ const LandingSidebar = () => {
                   {item.label}
                 </motion.button>
               ))}
+
+{/* admin button*/ }
+               {user?.role === "admin" && (
+              <motion.button
+                onClick={() => {
+                  navigate("/admin/dashboard");
+                  setOpenMenu(false);
+                }}
+                whileHover={{ scale: 1.03 }}
+                className="flex items-center gap-3 text-orange-400 p-3 rounded-lg hover:bg-white/10 transition"
+              >
+                <MdDashboard /> Admin Panel
+              </motion.button>
+            )}
 
 {user?.name ? (
                 <>
