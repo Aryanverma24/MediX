@@ -13,8 +13,8 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
-        <div className="admin-scroll h-full">
+      <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 transition-all duration-300 md:ml-0">
+        <div className="h-full">
           {children}
         </div>
       </main>

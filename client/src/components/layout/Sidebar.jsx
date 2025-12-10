@@ -77,26 +77,40 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* ✅ MOBILE TOGGLE BUTTON */}
+      {/* Mobile menu button */}
       <button
-        className="md:hidden fixed top-4 left-4 z-[999] bg-white/90 backdrop-blur text-green-600 p-2.5 rounded-xl shadow-md border border-green-100"
         onClick={() => setOpen(!open)}
+        className="fixed top-4 left-4 z-50 p-2 rounded-md text-gray-600 hover:bg-green-100 transition-colors md:hidden bg-white shadow-md"
       >
-        {open ? <X size={22} /> : <Menu size={22} />}
+        {open ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* ✅ SIDEBAR */}
+      {/* Overlay */}
       <AnimatePresence>
-        {(open || window.innerWidth >= 768) && (
+        {open && window.innerWidth < 768 && (
           <motion.div
-            ref={sidebarRef}
-            className="fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-white to-green-50 shadow-lg border-r border-green-100 flex flex-col z-50 overflow-hidden"
-            initial={{ x: -300 }}
-            animate={{ x: 0 }}
-            exit={{ x: -300 }}
-            transition={{ type: 'spring', stiffness: 100, damping: 25 }}
-          >
-            <div className="p-6 pb-4 overflow-x-hidden">
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/30 z-40 md:hidden"
+            onClick={() => setOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* SIDEBAR */}
+      <AnimatePresence>
+        <motion.div
+          ref={sidebarRef}
+          className={`fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-white to-green-50 shadow-lg border-r border-green-100 flex flex-col z-50 transform transition-transform duration-300 ease-in-out ${
+            open || window.innerWidth >= 768 ? 'translate-x-0' : '-translate-x-full'
+          }`}
+          initial={{ x: -300 }}
+          animate={{ x: (open || window.innerWidth >= 768) ? 0 : -300 }}
+          exit={{ x: -300 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 25 }}
+        >
+          <div className="p-6 pb-4 overflow-hidden flex flex-col h-full">
             {/* LOGO */}
             <Link
               to="/"
@@ -105,12 +119,12 @@ const Sidebar = () => {
             >
               <Zap className="w-7 h-7 text-green-500 mr-3" />
               <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
-                ADMIN <span className="text-green-400">Avaykt</span>
+                ADMIN <span className="text-green-400">Avyakt</span>
               </h1>
             </Link>
 
             {/* NAV */}
-            <nav className="space-y-3 mt-2 overflow-y-auto max-h-[calc(100vh-220px)] pr-2 -mr-2 custom-sidebar-scroll">
+            <nav className="space-y-3 mt-2 overflow-y-auto pr-2 -mr-2 custom-sidebar-scroll flex-grow">
               {navItems.map((item, index) => {
                 const isActive = location.pathname === item.path;
 
@@ -143,10 +157,9 @@ const Sidebar = () => {
                 );
               })}
             </nav>
-            </div>
 
             {/* LOGOUT */}
-            <div className="mt-auto p-6 pt-4 border-t border-green-100">
+            <div className="pt-4 border-t border-green-100">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -161,8 +174,8 @@ const Sidebar = () => {
                 </button>
               </motion.div>
             </div>
-          </motion.div>
-        )}
+          </div>
+        </motion.div>
       </AnimatePresence>
     </>
   );
