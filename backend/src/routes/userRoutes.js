@@ -2,7 +2,8 @@ import express from 'express';
 import { admin, protect } from '../middleware/authMiddleware.js';
 import { getAllUsers, deleteUser, getUserById ,
     updateSubscription,
-    getStreakAndTree
+    getStreakAndTree,
+    getUsers
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.get("/me", protect, (req, res) => {
 
 // Admin: Get all users
 router.get('/getAllUsers', protect,admin, getAllUsers);
+
+router.get('/getUsers',protect,admin,getUsers)
 
 // Admin: Delete a user by ID
 router.delete('/deleteUser/:userId',protect, admin, deleteUser);

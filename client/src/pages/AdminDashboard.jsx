@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Users, BarChart3, Activity, Calendar, Settings, Shield, Zap, TrendingUp, Clock } from "lucide-react";
+import API from "../utils/api";
 
 const DUMMY_DASHBOARD_DATA = {
     totalUsers: 12450,
@@ -38,7 +39,27 @@ const item = {
 };
 
 export default function AdminDashboard() {
+
+    const [totalUsers,setTotalUsers] = useState(0);
+    const [loading,setLoading] = useState(false);
+
     const dashboardData = DUMMY_DASHBOARD_DATA;
+
+    useEffect(() =>{
+
+        const fetchTotalUser =  async() => {
+            try {
+               const response = await API.get('/user/getUsers')
+               const users = response.data;
+               console.log(users);
+               console.log(totalUsers);
+               setTotalUsers(users.length)
+            } catch (error) {
+                toast.error(error,"unable to fetch total users")
+            }
+        }
+        fetchTotalUser();
+    },[])
 
     return (
         <div className="admin-scroll ml-1 md:ml-[18rem] p-10 min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
@@ -69,7 +90,7 @@ export default function AdminDashboard() {
                             <div>
                                 <p className="text-sm font-medium text-gray-500">Total Users</p>
                                 <p className="text-4xl font-bold text-green-700 mt-1">
-                                    {formatNumber(dashboardData?.totalUsers || 0)}
+                                    {formatNumber(totalUsers || 0)}
                                 </p>
                                 <p className="text-sm text-green-600 mt-2">
                                     +{formatNumber(dashboardData?.newUsersThisMonth || 0)} <span className="text-gray-500">new this month</span>

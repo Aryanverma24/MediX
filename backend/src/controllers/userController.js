@@ -114,3 +114,15 @@ export const getStreakAndTree = async (req, res) => {
     res.status(500).json({ message: "Unable to fetch streak/tree info" });
   }
 };
+
+
+export const getUsers = async (req,res) => {
+  try {
+    const users = await User.find({}).select("-Password");
+    if(users) return res.status(200).json({message : "users fetched successfully ", users}) 
+    return res.status(404).json({message : "users are not found!"})  
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message : "unable to fetch the count of users"})
+  }
+}
