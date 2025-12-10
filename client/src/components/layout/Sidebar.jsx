@@ -34,24 +34,47 @@ const Sidebar = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isOpen, setIsOpen] = useState(!isMobile);
   const sidebarRef = useRef(null);
 
-  // ✅ Auto hide sidebar when user logs out
+  // Auto hide sidebar when user logs out
   if (!user) return null;
 
-  // ✅ Close sidebar on outside click (mobile)
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setIsOpen(!mobile);
+    };
+
+    // Set initial state
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Close sidebar on outside click (mobile)
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setOpen(false);
+      if (isMobile && isOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isMobile, isOpen]);
+
+  // Close sidebar when route changes (mobile)
+  useEffect(() => {
+    if (isMobile) {
+      setIsOpen(false);
+    }
+  }, [location.pathname, isMobile]);
 
   // ✅ Logout function
   const handleLogout = async () => {
@@ -75,42 +98,45 @@ const Sidebar = () => {
     visible: { opacity: 1, x: 0 }
   };
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       {/* Mobile menu button */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={toggleSidebar}
         className="fixed top-4 left-4 z-50 p-2 rounded-md text-gray-600 hover:bg-green-100 transition-colors md:hidden bg-white shadow-md"
+        aria-label="Toggle menu"
       >
-        {open ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Overlay */}
       <AnimatePresence>
-        {open && window.innerWidth < 768 && (
+        {isMobile && isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/30 z-40 md:hidden"
-            onClick={() => setOpen(false)}
+            onClick={toggleSidebar}
           />
         )}
       </AnimatePresence>
 
       {/* SIDEBAR */}
-      <AnimatePresence>
-        <motion.div
-          ref={sidebarRef}
-          className={`fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-white to-green-50 shadow-lg border-r border-green-100 flex flex-col z-50 transform transition-transform duration-300 ease-in-out ${
-            open || window.innerWidth >= 768 ? 'translate-x-0' : '-translate-x-full'
-          }`}
-          initial={{ x: -300 }}
-          animate={{ x: (open || window.innerWidth >= 768) ? 0 : -300 }}
-          exit={{ x: -300 }}
-          transition={{ type: 'spring', stiffness: 100, damping: 25 }}
-        >
-          <div className="p-6 pb-4 overflow-hidden flex flex-col h-full">
+      <motion.aside
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-white to-green-50 shadow-lg border-r border-green-100 flex flex-col z-50 transform transition-transform duration-300 ease-in-out ${
+          isMobile ? (isOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'
+        }`}
+        initial={{ x: isMobile ? -300 : 0 }}
+        animate={{ x: isMobile ? (isOpen ? 0 : -300) : 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
+        <div className="p-6 pb-4 overflow-hidden flex flex-col h-full">
             {/* LOGO */}
             <Link
               to="/"
@@ -175,8 +201,7 @@ const Sidebar = () => {
               </motion.div>
             </div>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </motion.aside>
     </>
   );
 };

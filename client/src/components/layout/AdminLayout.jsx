@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 
 const AdminLayout = ({ children }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
   // Add admin-scroll class to body when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.classList.add('admin-scroll');
+    
+    // Check if mobile on mount and resize
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
     return () => {
       document.body.classList.remove('admin-scroll');
+      window.removeEventListener('resize', checkIfMobile);
     };
   }, []);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 transition-all duration-300 md:ml-0">
-        <div className="h-full">
+      <main 
+        className={`flex-1 overflow-x-hidden overflow-y-auto transition-all duration-300 ${
+          isMobile ? 'ml-0' : 'md:ml-72'
+        }`}
+      >
+        <div className="p-4 md:p-6">
           {children}
         </div>
       </main>
