@@ -93,7 +93,7 @@ const AttendanceReports = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen ml-[16rem] bg-gradient-to-br from-purple-100 via-pink-100 to-white">
+    <div className="p-6 min-h-screen ml-2 md:ml-[18rem] bg-gradient-to-br from-purple-100 via-pink-100 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">

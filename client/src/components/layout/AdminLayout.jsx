@@ -27,10 +27,10 @@ const AdminLayout = ({ children }) => {
       <Sidebar />
       <main 
         className={`flex-1 overflow-x-hidden overflow-y-auto transition-all duration-300 ${
-          isMobile ? 'ml-0' : 'md:ml-72'
+          isMobile ? 'w-full' : 'md:ml-72'
         }`}
       >
-        <div className="p-4 md:p-6">
+        <div className={`${isMobile ? 'w-full px-4' : 'p-4 md:p-6'}`}>
           {children}
         </div>
       </main>

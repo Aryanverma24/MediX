@@ -166,7 +166,7 @@ const SecurityLogs = () => {
   };
 
   return (
-    <div className="ml-[15rem] p-8 min-h-screen bg-gray-900 text-gray-100">
+    <div className="ml-2 md:ml-[18rem] p-8 min-h-screen bg-gray-900 text-gray-100">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
