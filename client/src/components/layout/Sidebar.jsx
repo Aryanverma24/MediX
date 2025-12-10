@@ -25,7 +25,7 @@ const navItems = [
   { name: 'User Management', icon: Users, path: '/admin/users' },
   {name : 'Create Meeting' , icon: Video, path : '/admin/create-meeting'},
   { name: 'Analytics Hub', icon: BarChart3, path: '/admin/analytics' },
-  { name: 'Engagement Track', icon: Activity, path: '/admin/engagement'},
+  { name: 'Engagement', icon: Activity, path: '/admin/engagement'},
   { name: 'Session Control', icon: Clock, path: '/admin/security-logs' },
   { name: 'System Settings', icon: Settings, path: '/admin/settings' }
 ];
