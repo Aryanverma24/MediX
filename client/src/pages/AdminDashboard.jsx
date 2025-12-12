@@ -45,6 +45,7 @@ export default function AdminDashboard() {
     const [activeUsers, setActiveUsers] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [meetings,setMeetings] = useState([]);
 
     const dashboardData = DUMMY_DASHBOARD_DATA;
 
@@ -87,6 +88,22 @@ export default function AdminDashboard() {
 
         fetchUsers();
     }, []);
+
+    useEffect(() => {
+        try {
+            setLoading(true);
+            const res = API.get('/meetings/getAllSessions');
+            const sessions = res.data;
+            setMeetings(sessions);
+            toast.success("Sessions fetched successfully")
+            setLoading(false);
+        } catch (error) {
+            toast.error("Failed to fetch sessions ")
+        }
+        fetchAllSessions();
+    },[])
+
+    console.log(meetings);
 
     return (
         <div className="admin-scroll ml-1 md:ml-[18rem] p-10 min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
@@ -146,7 +163,7 @@ export default function AdminDashboard() {
                                         formatNumber(activeUsers)
                                     )}
                                 </p>
-                                <p className="text-sm text-green-500 mt-2">
+                                <p className="text-xs text-green-500 mt-2">
                                     <TrendingUp className="inline w-4 h-4 mr-1 text-green-500" /> High Engagement Rate
                                 </p>
                             </div>

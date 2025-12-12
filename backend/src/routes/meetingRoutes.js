@@ -6,7 +6,8 @@ import {
   getTodaySession,
   joinMeeting,
   leaveMeeting,
-  getUserSessionHistory
+  getUserSessionHistory,
+  getAllSessions
 } from "../controllers/meetingController.js";
 
 const router = express.Router();
@@ -27,5 +28,7 @@ router.route("/leave/:sessionId")
 // User history
 router.route("/history")
   .get(protect, getUserSessionHistory); // Get user's session history
+
+router.route("/getAllSessions").get(protect,admin,getAllSessions) 
 
 export default router;

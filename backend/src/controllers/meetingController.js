@@ -223,3 +223,16 @@ export const getUserSessionHistory = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch session history" });
   }
 };
+
+export const getAllSessions = async(req,res) => {
+  try {
+    const meetings = await Meeting.find({});
+    if(!meetings){
+      return res.status(404).send({message : "No sessions found"})
+    }
+    return res.status(200).send({success : true ,meetings})
+  } catch (error) {
+    console.log("unable to get sessions. Internal server error")
+    return res.status(500).send({message : "Internal server Error While Getting all Sessions"})
+  }
+}
