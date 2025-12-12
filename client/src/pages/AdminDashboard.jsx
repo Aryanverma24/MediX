@@ -45,7 +45,7 @@ export default function AdminDashboard() {
     const [activeUsers, setActiveUsers] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [meetings,setMeetings] = useState([]);
+    const [meetings,setMeetings] = useState(null);
 
     const dashboardData = DUMMY_DASHBOARD_DATA;
 
