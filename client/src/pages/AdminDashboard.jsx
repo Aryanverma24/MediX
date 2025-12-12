@@ -112,6 +112,7 @@ export default function AdminDashboard() {
     
     const countMonthlyAttendees = () => {
         try {
+            console.log(meetings)
             if (!meetings || !meetings.length || !meetings[0]?.sessions) {
                 return 0;
             }
