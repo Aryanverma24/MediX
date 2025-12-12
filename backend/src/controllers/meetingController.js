@@ -322,7 +322,7 @@ export const getMonthlyAttendees = async (req, res) => {
     }
 };
 
-export const fetchLastThreeMonthAttendances =  async (req,res) =>{
+export const LastThreeMonthAttendances =  async (req,res) =>{
   try {
     const now = new Date();
 
