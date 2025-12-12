@@ -320,70 +320,82 @@ export const getMonthlyAttendees = async (req, res) => {
             error: error.message
         });
     }
-};
-
-export const LastThreeMonthAttendances =  async (req,res) =>{
+};export const LastThreeMonthAttendances = async (req, res) => {
   try {
     const now = new Date();
 
-    const threeMonthsAgo = new Date();
-    threeMonthsAgo.setMonth(now.getMonth() - 2); // including current month → last 3 months
-    threeMonthsAgo.setDate(1); // Start from first day
-    threeMonthsAgo.setHours(0, 0, 0, 0);
+    // Start of the range → 2 months back (including current → 3 total)
+    const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1, 0, 0, 0);
 
+    // End of range → 1st day of next month
     const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
     const data = await Meeting.aggregate([
+      { $unwind: "$sessions" },
+
+      // Convert joinTime (string) → Date for comparison
       {
-        $unwind : "$sessions"
-      },{
-        $match : {
-          "sessions.joinTime" : {
-            $gte : threeMonthsAgo,
-            $lte : endDate
+        $addFields: {
+          joinTimeDate: { $toDate: "$sessions.joinTime" }
+        }
+      },
+
+      // Filter last 3 months
+      {
+        $match: {
+          joinTimeDate: {
+            $gte: threeMonthsAgo,
+            $lt: endDate
           }
         }
       },
+
+      // Extract date components
       {
-        $project : {
-          month : {$month :  "$sessions.joinTime"},
-          year : {$year :  "$sessions.joinTime"},
-          date : {
-            $dateToString  : {
-              format : "%Y-%m-%d",
-              date : "$sessions.joinTime"
+        $project: {
+          year: { $year: "$joinTimeDate" },
+          month: { $month: "$joinTimeDate" },
+          date: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$joinTimeDate"
             }
           },
-          attendees : {
-            $size : "$sessions.attendees"
-          }
+          attendees: { $size: "$sessions.attendees" }
         }
-      },{
-        $group :{
-          _id : {year : "$year" , month : "$month"},
-          totalMonthlyAttendees : { $sum : "$attendees"},
-          dailyDate : {
-            $push : {
-              date : "$date",
-              count : "$attendees"
+      },
+
+      // Group by year + month
+      {
+        $group: {
+          _id: { year: "$year", month: "$month" },
+          totalMonthlyAttendees: { $sum: "$attendees" },
+          daily: {
+            $push: {
+              date: "$date",
+              count: "$attendees"
             }
           }
         }
       },
+
+      // Sort by year + month
       {
-        $sort : {
-          "_id.year" : 1,"_id.month" : 1
+        $sort: {
+          "_id.year": 1,
+          "_id.month": 1
         }
       }
-    ])
+    ]);
 
     return res.status(200).json({
-      success : true,
-      message : "Last Three Month Attendees",
+      success: true,
+      message: "Last Three Month Attendees",
       data
-    })
+    });
+
   } catch (error) {
     console.log("Internal server error ", error);
-    return res.status(500).json({message : "Internal server Error"})
+    return res.status(500).json({ message: "Internal server Error" });
   }
-}
+};
