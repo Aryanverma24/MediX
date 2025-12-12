@@ -161,6 +161,7 @@ export default function AdminDashboard() {
         const year = now.getFullYear();
         const month = now.getMonth();
 
+        console.log(year , month)
         const res = await API.get(`/meetings/monthly-attendees?year=${year}&month=${month}`);
 
         if (res.data.success) {
