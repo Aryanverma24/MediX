@@ -101,7 +101,7 @@ const AttendanceList = () => {
   }
 
   return (
-    <div className="md:ml-[15rem] min-h-screen p-4 sm:p-6" style={{ backgroundColor: colors.bgPrimary }}>
+    <div className="admin-scroll ml-1 md:ml-[18rem] p-10 min-h-screen bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex justify-between items-center mb-6">
           <div>
