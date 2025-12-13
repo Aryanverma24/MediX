@@ -139,13 +139,13 @@ const AllUsers = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 border-b border-green-100 pb-6 w-full"
+                className="flex flex-col items-center text-center mb-8 w-full"
             >
-                <div>
-                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-400">
+                <div className="w-full max-w-4xl mx-auto px-4">
+                    <h2 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-400">
                         User Management System
                     </h2>
-                    <p className="text-gray-600 mt-1">Control access and view registered users in the core system.</p>
+                    <p className="text-gray-600 mt-2">Control access and view registered users in the core system.</p>
                 </div>
                 <motion.button
                     onClick={handleAddUser}
@@ -158,8 +158,8 @@ const AllUsers = () => {
                 </motion.button>
             </motion.div>
 
-           <div className="md:mx-[8rem]">
-             <div className="bg-white/90 w-[25rem] md:w-[45rem] backdrop-blur-sm rounded-xl shadow-sm border border-green-100 overflow-hidden">
+           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div className="bg-white/90 w-full backdrop-blur-sm rounded-xl shadow-sm border border-green-100 overflow-hidden">
                 <div className="p-5 border-b border-green-100">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
                         <form onSubmit={handleSearch} className="flex-1">
@@ -192,7 +192,7 @@ const AllUsers = () => {
                     </div>
                 </div>
 
-                <div className="overflow-x-auto w-[25rem] md:w-[45rem]">
+                <div className="overflow-x-auto w-full">
                     {loading ? (
                         <div className="p-10 text-center text-gray-600">
                             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-400 border-t-green-100 mx-auto"></div>
@@ -228,7 +228,9 @@ const AllUsers = () => {
                                         variants={itemVariants}
                                         custom={index}
                                     >
-                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{user.email}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[200px] sm:max-w-none">
+                                            <span className="block truncate">{user.email}</span>
+                                        </td>
                                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap">{getRoleBadge(user.role)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                                             {/* Assuming a boolean 'isActive' property exists */}
