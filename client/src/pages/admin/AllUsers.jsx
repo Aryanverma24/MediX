@@ -134,7 +134,7 @@ const AllUsers = () => {
     };
 
     return (
-        <div className="p-4 sm:p-6 md:ml-[10rem] min-h-screen min-w-full transition-all duration-300 bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800 overflow-x-hidden">
+        <div className="p-4 sm:p-6 md:pl-[15rem] min-h-screen min-w-full transition-all duration-300 bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800 overflow-x-hidden">
             <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
