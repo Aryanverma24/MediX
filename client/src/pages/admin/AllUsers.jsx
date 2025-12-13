@@ -202,122 +202,85 @@ const AllUsers = () => {
                             <p className="text-xl">No user records found matching criteria.</p>
                         </div>
                     ) : (
-<table className="w-full table-fixed border-collapse">
-  <thead className="bg-gray-800/50 border-b border-gray-700">
-    <tr>
-      <th className="px-3 py-3 text-left text-xs font-medium text-cyan-400 uppercase w-[22%]">
-        User
-      </th>
-
-      <th className="hidden md:table-cell px-3 py-3 text-left text-xs font-medium text-cyan-400 uppercase w-[22%]">
-        Email
-      </th>
-
-      <th className="px-3 py-3 text-left text-xs font-medium text-cyan-400 uppercase w-[12%]">
-        Role
-      </th>
-
-      <th className="hidden sm:table-cell px-3 py-3 text-left text-xs font-medium text-cyan-400 uppercase w-[14%]">
-        Status
-      </th>
-
-      <th className="hidden lg:table-cell px-3 py-3 text-left text-xs font-medium text-cyan-400 uppercase w-[15%]">
-        Joined
-      </th>
-
-      <th className="px-3 py-3 text-right text-xs font-medium text-cyan-400 uppercase w-[15%]">
-        Actions
-      </th>
-    </tr>
-  </thead>
-
-  <motion.tbody
-    className="divide-y divide-gray-700"
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-  >
-    {users?.map((user, index) => (
-      <motion.tr
-        key={user._id}
-        variants={itemVariants}
-        custom={index}
-        className="hover:bg-gray-700/40 transition"
-      >
-        {/* USER */}
-        <td className="px-3 py-3">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-purple-700/50 flex items-center justify-center text-purple-300 font-bold">
-              {user.name?.charAt(0) || "U"}
-            </div>
-            <div className="truncate">
-              <p className="text-sm font-medium text-white truncate">
-                {user.name}
-              </p>
-              {/* Mobile email */}
-              <p className="text-xs text-gray-500 truncate md:hidden">
-                {user.email}
-              </p>
-            </div>
-          </div>
-        </td>
-
-        {/* EMAIL */}
-        <td className="hidden md:table-cell px-3 py-3 text-sm text-gray-400 truncate">
-          {user.email}
-        </td>
-
-        {/* ROLE */}
-        <td className="px-3 py-3">
-          {getRoleBadge(user.role)}
-        </td>
-
-        {/* STATUS */}
-        <td className="hidden sm:table-cell px-3 py-3 text-sm">
-          {checkActive(user?.subscription?.endDate) ? (
-            <span className="flex items-center text-lime-400 font-medium">
-              <FiCheckCircle className="mr-1 w-4 h-4" /> Active
-            </span>
-          ) : (
-            <span className="flex items-center text-red-400 font-medium">
-              <FiXCircle className="mr-1 w-4 h-4" /> Inactive
-            </span>
-          )}
-        </td>
-
-        {/* JOINED */}
-        <td className="hidden lg:table-cell px-3 py-3 text-sm text-gray-400 truncate">
-          {formatDate(user.createdAt)}
-        </td>
-
-        {/* ACTIONS */}
-        <td className="px-3 py-3 text-right">
-          <div className="flex justify-end gap-2">
-            <motion.button
-              onClick={() => handleEditUser(user._id)}
-              className="p-2 rounded-lg hover:bg-green-500/10 text-green-400"
-              whileHover={{ scale: 1.1 }}
-            >
-              <FiEdit2 />
-            </motion.button>
-
-            {user._id !== currentUser?._id &&
-              currentUser?.role === "admin" && (
-                <motion.button
-                  onClick={() => handleDeleteUser(user._id)}
-                  className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <FiTrash2 />
-                </motion.button>
-              )}
-          </div>
-        </td>
-      </motion.tr>
-    ))}
-  </motion.tbody>
-</table>
-
+                        <table className="min-w-full divide-y divide-gray-200 w-full">
+                            <thead className="bg-gray-800/50 border-b border-gray-700">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">User Profile</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Email</th>
+                                    <th scope="col" className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                        Role
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Status</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Joined</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-cyan-400 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <motion.tbody 
+                                className="divide-y divide-gray-700"
+                                variants={containerVariants}
+                                initial="hidden"
+                                animate="visible"
+                            >
+                                {users?.map((user, index) => (
+                                    <motion.tr 
+                                        key={user._id} 
+                                        className="hover:bg-gray-700/50 transition duration-150"
+                                        variants={itemVariants}
+                                        custom={index}
+                                    >
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
+                                            <div className="flex items-center">
+                                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-purple-700/50 flex items-center justify-center text-purple-300 font-bold border border-purple-500/50">
+                                                    {user.name?.charAt(0) || 'U'}
+                                                </div>
+                                                <div className="ml-4">
+                                                    <div className="text-sm font-medium text-white">{user.name}</div>
+                                                    <div className="text-xs text-gray-600">@{user.email || 'n/a'}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{user.email}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">{getRoleBadge(user.role)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                            {/* Assuming a boolean 'isActive' property exists */}
+                                            {checkActive(user?.subscription?.endDate) ? (
+                                                <span className="flex items-center text-lime-400 font-medium">
+                                                    <FiCheckCircle className="mr-1.5 w-4 h-4" /> Active
+                                                </span>
+                                            ) : (
+                                                <span className="flex items-center text-red-400 font-medium">
+                                                    <FiXCircle className="mr-1.5 w-4 h-4" /> Inactive
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{formatDate(user.createdAt)}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div className="flex justify-end space-x-3">
+                                                <motion.button
+                                                    onClick={() => handleEditUser(user._id)}
+                                                    className="px-3 py-1 text-sm text-gray-600 rounded-lg hover:bg-green-100 transition-colors"
+                                                    title="Edit user"
+                                                    whileHover={{ scale: 1.1, boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)" }}
+                                                >
+                                                    <FiEdit2 className="h-5 w-5" />
+                                                </motion.button>
+                                                {user._id !== currentUser?._id && currentUser?.role === "admin" && (
+                                                    <motion.button
+                                                        onClick={() => handleDeleteUser(user._id)}
+                                                        className="px-3 py-1 text-sm text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+                                                        title="Delete user"
+                                                        whileHover={{ scale: 1.1, boxShadow: "0 0 10px rgba(255, 0, 0, 0.5)" }}
+                                                    >
+                                                        <FiTrash2 className="h-5 w-5" />
+                                                    </motion.button>
+                                                )}
+                                            </div>
+                                        </td>
+                                        
+                                    </motion.tr>
+                                ))}
+                            </motion.tbody>
+                        </table>
                     )}
                 </div>
 
