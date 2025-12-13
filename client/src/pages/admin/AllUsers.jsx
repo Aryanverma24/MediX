@@ -205,7 +205,6 @@ const AllUsers = () => {
                         <table className="min-w-full divide-y divide-gray-200 w-full">
                             <thead className="bg-gray-800/50 border-b border-gray-700">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">User Profile</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Email</th>
                                     <th scope="col" className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                         Role
@@ -228,17 +227,6 @@ const AllUsers = () => {
                                         variants={itemVariants}
                                         custom={index}
                                     >
-                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
-                                            <div className="flex items-center">
-                                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-purple-700/50 flex items-center justify-center text-purple-300 font-bold border border-purple-500/50">
-                                                    {user.name?.charAt(0) || 'U'}
-                                                </div>
-                                                <div className="ml-4">
-                                                    <div className="text-sm font-medium text-white">{user.name}</div>
-                                                    <div className="text-xs text-gray-600">@{user.email || 'n/a'}</div>
-                                                </div>
-                                            </div>
-                                        </td>
                                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{user.email}</td>
                                         <td className="px-3 sm:px-6 py-4 whitespace-nowrap">{getRoleBadge(user.role)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm">
