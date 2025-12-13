@@ -134,13 +134,12 @@ const AllUsers = () => {
     };
 
     return (
-        <div className="p-5 sm:p-8 min-h-screen w-full md:ml-[18rem] transition-all duration-300 bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800">
-
+        <div className="p-4 sm:p-6 min-h-screen w-full md:ml-[18rem] transition-all duration-300 bg-gradient-to-br from-green-50 via-cream-50 to-white text-gray-800 overflow-x-hidden">
             <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 border-b border-green-100 pb-6"
+                className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 border-b border-green-100 pb-6 w-full"
             >
                 <div>
                     <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-400">
@@ -192,7 +191,7 @@ const AllUsers = () => {
                     </div>
                 </div>
 
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto w-full max-w-full">
                     {loading ? (
                         <div className="p-10 text-center text-gray-600">
                             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-400 border-t-green-100 mx-auto"></div>
@@ -203,12 +202,14 @@ const AllUsers = () => {
                             <p className="text-xl">No user records found matching criteria.</p>
                         </div>
                     ) : (
-                        <table className="min-w-full divide-y divide-gray-700">
+                        <table className="min-w-full divide-y divide-gray-200 w-full">
                             <thead className="bg-gray-800/50 border-b border-gray-700">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">User Profile</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Email</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Role</th>
+                                    <th scope="col" className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                        Name
+                                    </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Status</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Joined</th>
                                     <th className="px-6 py-3 text-right text-xs font-medium text-cyan-400 uppercase tracking-wider">Actions</th>
@@ -227,7 +228,7 @@ const AllUsers = () => {
                                         variants={itemVariants}
                                         custom={index}
                                     >
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-purple-700/50 flex items-center justify-center text-purple-300 font-bold border border-purple-500/50">
                                                     {user.name?.charAt(0) || 'U'}
@@ -238,8 +239,8 @@ const AllUsers = () => {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{user.email}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">{getRoleBadge(user.role)}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{user.email}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap">{getRoleBadge(user.role)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                                             {/* Assuming a boolean 'isActive' property exists */}
                                             {checkActive(user?.subscription?.endDate) ? (
@@ -252,8 +253,8 @@ const AllUsers = () => {
                                                 </span>
                                             )}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{formatDate(user.createdAt)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 overflow-hidden text-ellipsis max-w-[150px] sm:max-w-none">{formatDate(user.createdAt)}</td>
+                                        <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div className="flex justify-end space-x-3">
                                                 <motion.button
                                                     onClick={() => handleEditUser(user._id)}
@@ -284,7 +285,7 @@ const AllUsers = () => {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="flex items-center justify-between px-4 py-3 bg-green-50/50 border-t border-green-100 sm:px-6 rounded-b-xl">
+                    <div className="flex flex-col sm:flex-row items-center justify-between px-3 sm:px-6 py-3 bg-gray-50 text-xs text-gray-500 gap-4">
                         <div className="flex-1 flex justify-between sm:hidden">
                             <button
                                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
