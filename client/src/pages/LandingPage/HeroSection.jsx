@@ -123,16 +123,16 @@ const HeroSection = () => {
                 </div>
             </div>
         </section>
-              <div className="w-full flex justify-around gap-20 mx-auto px-4 py-6">
+              <div className="w-full flex justify-around mx-auto px-4 py-6">
                     <img 
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Google_for_Startups_logo.svg/1200px-Google_for_Startups_logo.svg.png"
                       className="h-8 w-auto object-contain"
                       alt="Google for Startups"
                     />
                     <img 
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdXb6yFb5UMer8xTSJDmGH5ogfDqA3h7O6Yw&s"
-                      className="h-8 w-auto object-contain"
-                      alt="IIT Mandi"
+                      src="https://media.licdn.com/dms/image/v2/C4D0BAQHvqtUWXWJ8gw/company-logo_200_200/company-logo_200_200/0/1630574955442/iitmandicatalyst_logo?e=2147483647&v=beta&t=UR1165UOK9lJNy8HBEuls_BKhlbCqZ4YzktMbvQZXYs"
+                      className="h-12 w-auto object-contain"
+                      alt="IIT Mandi catalyst"
                     />
               </div>
         </>
