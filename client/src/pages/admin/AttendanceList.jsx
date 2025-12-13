@@ -200,7 +200,9 @@ const AttendanceList = () => {
                       style={{ backgroundColor: index % 2 === 0 ? colors.white : colors.bgHover }}
                     >
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium" style={{ color: colors.textPrimary }}>{attendee.name}</div>
+                        <div className="text-sm font-medium" style={{ color: colors.textPrimary }}>
+                            {(attendee.name).substring(0,1).toUpperCase() + (attendee.name).substring(1)}
+                            </div>
                         <div className="text-xs sm:hidden" style={{ color: colors.textSecondary }}>{attendee.email}</div>
                         <div className="text-xs md:hidden mt-1 flex items-center" style={{ color: colors.textSecondary }}>
                           <Clock className="w-3 h-3 mr-1" />
