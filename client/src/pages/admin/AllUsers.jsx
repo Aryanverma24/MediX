@@ -158,7 +158,8 @@ const AllUsers = () => {
                 </motion.button>
             </motion.div>
 
-            <div className="bg-white/90 w-[45rem] backdrop-blur-sm rounded-xl shadow-sm border border-green-100 overflow-hidden">
+           <div className="flex justify-around">
+             <div className="bg-white/90 w-[25rem] md:w-[45rem] backdrop-blur-sm rounded-xl shadow-sm border border-green-100 overflow-hidden">
                 <div className="p-5 border-b border-green-100">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
                         <form onSubmit={handleSearch} className="flex-1">
@@ -191,7 +192,7 @@ const AllUsers = () => {
                     </div>
                 </div>
 
-                <div className="overflow-x-hidden w-[45rem]">
+                <div className="overflow-x-auto w-[25rem] md:w-[45rem]">
                     {loading ? (
                         <div className="p-10 text-center text-gray-600">
                             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-400 border-t-green-100 mx-auto"></div>
@@ -345,6 +346,7 @@ const AllUsers = () => {
                     </div>
                 )}
             </div>
+           </div>
         </div>
     );
 };
