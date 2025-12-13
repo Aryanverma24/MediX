@@ -5,23 +5,46 @@ import API from '../../utils/api';
 import { toast } from 'react-hot-toast';
 import Loader from '../../components/ui/Loader';
 
-// Custom colors
+// Color scheme matching AdminDashboard
 const colors = {
-  cream: '#FFF8F0',
-  pistachio: '#E0E7C5',
-  darkPistachio: '#C5D7B2',
-  textPrimary: '#2C3E50',
-  textSecondary: '#546E7A',
-  success: '#4CAF50',
-  error: '#F44336',
-  warning: '#FFC107',
-  info: '#2196F3'
+  // Background colors
+  bgPrimary: '#F8FAFC',
+  bgSecondary: '#FFFFFF',
+  bgHover: '#F1F5F9',
+  
+  // Primary colors (emerald)
+  primary: '#10B981',
+  primaryLight: '#A7F3D0',
+  primaryDark: '#059669',
+  
+  // Text colors
+  textPrimary: '#1E293B',
+  textSecondary: '#64748B',
+  textTertiary: '#94A3B8',
+  
+  // Status colors
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
+  info: '#3B82F6',
+  
+  // Borders and dividers
+  border: '#E2E8F0',
+  borderLight: '#F1F5F9',
+  
+  // Additional colors
+  white: '#FFFFFF',
+  black: '#000000',
+  
+  // Gradients
+  gradientPrimary: 'from-emerald-500 to-teal-600',
+  gradientHover: 'from-emerald-600 to-teal-700'
 };
 
 const StatCard = ({ title, value, icon, color }) => (
   <motion.div
-    className="bg-white/90 border border-opacity-30 border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all h-full flex flex-col justify-between"
-    style={{ backgroundColor: colors.cream, borderColor: colors.darkPistachio }}
+    className="bg-white/90 border rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all h-full flex flex-col justify-between"
+    style={{ backgroundColor: colors.bgSecondary, borderColor: colors.border }}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     whileHover={{ y: -2 }}
@@ -78,7 +101,7 @@ const AttendanceList = () => {
   }
 
   return (
-    <div className="min-h-screen p-4 sm:p-6" style={{ backgroundColor: '#FAFAF7' }}>
+    <div className="md:ml-[15rem] min-h-screen p-4 sm:p-6" style={{ backgroundColor: colors.bgPrimary }}>
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex justify-between items-center mb-6">
           <div>
@@ -87,9 +110,9 @@ const AttendanceList = () => {
               {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
-          <div className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg" style={{ backgroundColor: colors.pistachio }}>
-            <BarChart2 className="w-5 h-5" style={{ color: colors.textPrimary }} />
-            <span className="text-sm font-medium" style={{ color: colors.textPrimary }}>Live Updates</span>
+          <div className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-lg" style={{ backgroundColor: colors.primaryLight }}>
+            <BarChart2 className="w-5 h-5" style={{ color: colors.primaryDark }} />
+            <span className="text-sm font-medium" style={{ color: colors.primaryDark }}>Live Updates</span>
           </div>
         </div>
 
@@ -120,8 +143,8 @@ const AttendanceList = () => {
           />
         </div>
 
-        <div className="bg-white rounded-xl border border-opacity-30 shadow-sm overflow-hidden" style={{ borderColor: colors.darkPistachio }}>
-          <div className="p-4 sm:p-6 border-b border-opacity-30" style={{ borderColor: colors.darkPistachio, backgroundColor: colors.cream }}>
+        <div className="bg-white rounded-xl border shadow-sm overflow-hidden" style={{ borderColor: colors.border }}>
+          <div className="p-4 sm:p-6 border-b" style={{ borderColor: colors.border, backgroundColor: colors.bgSecondary }}>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
               <div>
                 <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2" style={{ color: colors.textPrimary }}>
@@ -133,8 +156,14 @@ const AttendanceList = () => {
                 </p>
               </div>
               <div className="mt-2 sm:mt-0">
-                <button className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium" 
-                  style={{ backgroundColor: colors.pistachio, color: colors.textPrimary }}>
+                <button className="text-xs sm:text-sm px-3 py-1.5 rounded-lg font-medium transition-colors duration-200" 
+                  style={{ 
+                    backgroundColor: colors.primary, 
+                    color: 'white',
+                    ':hover': {
+                      backgroundColor: colors.primaryDark
+                    }
+                  }}>
                   Export Data
                 </button>
               </div>
@@ -142,9 +171,9 @@ const AttendanceList = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-opacity-30" style={{ borderColor: colors.darkPistachio }}>
+            <table className="min-w-full divide-y divide-opacity-30" style={{ borderColor: colors.border }}>
               <thead>
-                <tr style={{ backgroundColor: colors.pistachio + '40' }}>
+                <tr style={{ backgroundColor: colors.primaryLight + '80' }}>
                   <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium uppercase tracking-wider" style={{ color: colors.textPrimary }}>
                     Name
                   </th>
@@ -168,7 +197,7 @@ const AttendanceList = () => {
                     <tr 
                       key={index} 
                       className="hover:opacity-90 transition-opacity"
-                      style={{ backgroundColor: index % 2 === 0 ? 'white' : colors.cream }}
+                      style={{ backgroundColor: index % 2 === 0 ? colors.white : colors.bgHover }}
                     >
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium" style={{ color: colors.textPrimary }}>{attendee.name}</div>
@@ -186,7 +215,7 @@ const AttendanceList = () => {
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm" style={{ color: colors.textPrimary }}>
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
-                          style={{ backgroundColor: colors.pistachio + '80', color: colors.textPrimary }}>
+                          style={{ backgroundColor: colors.primaryLight, color: colors.primaryDark }}>
                           {Math.floor(attendee.duration / 60)}m {attendee.duration % 60}s
                         </span>
                       </td>
