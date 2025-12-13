@@ -434,7 +434,7 @@ export const getTodaysAttendance = async (req, res) => {
       { $unwind: "$user" },
       {
         $project: {
-          name: { $concat: ["$user.firstName", " ", "$user.lastName"] },
+          name: "$user.name",
           email: "$user.email",
           joinTime: "$sessions.attendees.joinTime",
           duration: "$sessions.attendees.duration",

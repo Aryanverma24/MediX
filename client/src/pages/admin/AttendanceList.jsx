@@ -137,7 +137,7 @@ const AttendanceList = () => {
           />
           <StatCard
             title="Avg. Duration"
-            value={`${Math.round(attendance.averageDuration)}m`}
+            value={`${Math.round(attendance.averageDuration/60)}m`}
             icon={<Clock3 />}
             color={colors.warning}
           />
