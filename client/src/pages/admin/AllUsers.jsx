@@ -161,7 +161,7 @@ const AllUsers = () => {
            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div className="bg-white/90 w-full backdrop-blur-sm rounded-xl shadow-sm border border-green-100 overflow-hidden">
                 <div className="p-5 border-b border-green-100">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                    <div className="flex flex-row md:items-center md:justify-between gap-5">
                         <form onSubmit={handleSearch} className="flex-1">
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -204,15 +204,15 @@ const AllUsers = () => {
                         </div>
                     ) : (
                         <table className="min-w-full divide-y divide-gray-200 w-full">
-                            <thead className="bg-gray-800/50 border-b border-gray-700">
+                            <thead className="bg-green-800/50 border-b border-green-700">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Email</th>
-                                    <th scope="col" className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-stone-900 uppercase tracking-wider">Email</th>
+                                    <th scope="col" className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-stone-900 uppercase tracking-wider whitespace-nowrap">
                                         Role
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-cyan-400 uppercase tracking-wider">Joined</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-cyan-400 uppercase tracking-wider">Actions</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-stone-900 uppercase tracking-wider">Status</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-stone-900 uppercase tracking-wider">Joined</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-stone-900 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <motion.tbody 
@@ -224,7 +224,7 @@ const AllUsers = () => {
                                 {users?.map((user, index) => (
                                     <motion.tr 
                                         key={user._id} 
-                                        className="hover:bg-gray-700/50 transition duration-150"
+                                        className="hover:bg-green-700/50 transition duration-150"
                                         variants={itemVariants}
                                         custom={index}
                                     >
@@ -235,11 +235,11 @@ const AllUsers = () => {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                                             {/* Assuming a boolean 'isActive' property exists */}
                                             {checkActive(user?.subscription?.endDate) ? (
-                                                <span className="flex items-center text-lime-400 font-medium">
+                                                <span className="flex items-center text-lime-600 font-medium">
                                                     <FiCheckCircle className="mr-1.5 w-4 h-4" /> Active
                                                 </span>
                                             ) : (
-                                                <span className="flex items-center text-red-400 font-medium">
+                                                <span className="flex items-center text-red-500 font-medium">
                                                     <FiXCircle className="mr-1.5 w-4 h-4" /> Inactive
                                                 </span>
                                             )}
