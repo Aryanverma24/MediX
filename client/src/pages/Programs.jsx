@@ -14,7 +14,7 @@ const programs = [
     description: "Live daily meditation sessions designed to build consistency, inner calm, and mindfulness as part of your everyday routine.",
     duration: "Daily · 30 mins",
     level: "All Levels",
-    image: "/assets/LakeMeditation.png",
+    image: "https://innerspacetherapy.in/wp-content/uploads/2023/07/19457380-scaled.jpg",
     features: [
       "Live guided meditation every day",
       "Theme-based mindfulness practices",
@@ -28,7 +28,7 @@ const programs = [
     description: "A structured, module-based meditation learning program designed for students to develop focus, emotional balance, and mental well-being.",
     duration: "Module Based",
     level: "Students",
-    image: "/assets/LotusMeditation.png",
+    image: "https://t3.ftcdn.net/jpg/01/40/09/28/240_F_140092881_ObKozKQYYsZPg8mLwGzjdO4moIrmMgwa.jpg",
     features: [
       "Age-appropriate meditation modules",
       "Progressive learning path",
@@ -42,7 +42,7 @@ const programs = [
     description: "A professional mindfulness and meditation program tailored for corporate employees to reduce stress, improve productivity, and enhance workplace well-being.",
     duration: "Flexible Programs",
     level: "Corporate",
-    image: "/assets/RealMeditation.png",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf5xsVHID18S7hx4FawfaJKOf6_DogHOhRpw&s",
     features: [
       "Stress & burnout management",
       "Mindfulness for productivity",
