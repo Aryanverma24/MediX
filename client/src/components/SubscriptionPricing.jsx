@@ -4,30 +4,30 @@ import { motion } from "framer-motion";
 const plans = [
   {
     title: "Monthly",
-    price: "₹ 499 / month",
-    approx: "Approx. ₹ 499 per month",
+    price: "₹ 499 / month",
+    approx: "Approx. ₹ 499 per month",
     save: "",
     description: "Access to all daily sessions, recordings, gratitude & journaling exercises."
   },
   {
     title: "Quarterly",
-    price: "₹ 1 299 total",
-    approx: "≈ ₹ 433 per month",
-    save: "(save ~13 %)",
+    price: "₹ 1299 total",
+    approx: "≈ ₹ 433 per month",
+    save: "(save ~13 %)",
     description: "Same features; more economical for committed practice."
   },
   {
     title: "Half-Yearly",
-    price: "₹ 2 499 total",
-    approx: "≈ ₹ 417 per month",
-    save: "(save ~16 %)",
+    price: "₹ 2499 total",
+    approx: "≈ ₹ 417 per month",
+    save: "(save ~16 %)",
     description: "Encourages sustained practice and deeper transformation."
   },
   {
     title: "Annual",
-    price: "₹ 4 799 total",
-    approx: "≈ ₹ 400 per month",
-    save: "(save ~20 %)",
+    price: "₹ 4799 total",
+    approx: "≈ ₹400 per month",
+    save: "(save ~20 %)",
     description: "Best value; supports long-term."
   }
 ];

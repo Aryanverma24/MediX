@@ -17,7 +17,7 @@ const Footer = () => {
         {/* Brand info */}
         <div>
           <h2 className="text-2xl font-bold mb-4">
-            Avaykt <span className="text-orange-600">Ehsaas</span>
+            Avyakt <span className="text-orange-600">Ehsaas</span>
           </h2>
 
           <p className="text-sm leading-relaxed text-stone-600">
@@ -73,7 +73,7 @@ const Footer = () => {
 
           <div className="flex items-center gap-3 mb-3 text-sm">
             <FaEnvelope className="text-orange-500" />
-            <span>support@avayktehsaas.com</span>
+            <span>support@avyaktehsaas.com</span>
           </div>
 
           <div className="flex items-center gap-3 mb-3 text-sm">
@@ -95,7 +95,7 @@ const Footer = () => {
       {/* Copyright */}
       <p className="text-center text-sm text-stone-600 mt-6">
         &copy; {" "}
-        { new Date().getFullYear()} Avaykt Ehsaas • All rights reserved • Member of Google Startups
+        { new Date().getFullYear()} Avyakt Ehsaas • All rights reserved • Member of Google Startups
       </p>
     </footer>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardHeader, CardContent, CardDescription } from "../../components/ui/Card";
 import { FaStar } from "react-icons/fa";
-import logo from '../../assets/avaykt-ehsaas-logo.png'
+import logo from '../../assets/avyakt-ehsaas-logo.png'
 
 const mentors = [
   {

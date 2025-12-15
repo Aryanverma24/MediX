@@ -64,7 +64,7 @@ const HeroSection = () => {
                         ref={headingRef}
                         className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-extrabold text-white mb-6 leading-tight"
                     >
-                        Avaykt-Ehsaas
+                        Avyakt-Ehsaas
                     </h1>
 
                     {/* Paragraph */}
@@ -85,7 +85,7 @@ const HeroSection = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
                         >
-                            Join daily live meditation sessions, explore our courses, and enhance your mind with Avaykt Ehsaas.
+                            Join daily live meditation sessions, explore our courses, and enhance your mind with Avyakt Ehsaas.
                         </motion.p>
                     </div>
 
@@ -126,7 +126,7 @@ const HeroSection = () => {
               <div className="w-full flex justify-around mx-auto px-4 py-6">
                     <img 
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Google_for_Startups_logo.svg/1200px-Google_for_Startups_logo.svg.png"
-                      className="h-[30px] sm:h-[40px] mt-25px sm:mt-[30px] md:h-[50px] md:mt-[40px] w-auto object-contain"
+                      className="h-[30px] sm:h-[40px] mt-[25px] sm:mt-[30px] md:h-[50px] md:mt-[40px] w-auto object-contain"
                       alt="Google for Startups"
                     />
                     <img 

@@ -22,7 +22,7 @@ import {
 const programs = [
   {
     title: "Daily Live Meditation (Zoom)",
-    desc: "Join daily guided meditation sessions live on Zoom with Avaykt mentors.",
+    desc: "Join daily guided meditation sessions live on Zoom with Avyakt mentors.",
     icon: <FaVideo />,
   },
   {
@@ -84,7 +84,7 @@ const ProgramsAndBenefits = () => {
             >
               <CardHeader
                 title={item.title}
-                subtitle="Avaykt Signature Program"
+                subtitle="Avyakt Signature Program"
               />
 
               <CardContent>
@@ -110,7 +110,7 @@ const ProgramsAndBenefits = () => {
       <div className="max-w-6xl mx-auto px-4 mt-20">
 
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-3">
-          Why <span className="text-orange-600">Avaykt Ehsaas?</span>
+          Why <span className="text-orange-600">Avyakt Ehsaas?</span>
         </h2>
 
         <p className="text-center text-lg max-w-2xl mx-auto mb-12 text-stone-600">
@@ -144,7 +144,7 @@ const ProgramsAndBenefits = () => {
 
             <CardContent>
               <CardDescription>
-                Join Avaykt Ehsaas & experience transformation through daily
+                Join Avyakt Ehsaas & experience transformation through daily
                 live practices and personal guidance.
               </CardDescription>
             </CardContent>

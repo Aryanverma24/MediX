@@ -14,15 +14,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const AboutAvaykt = () => {
+const AboutAvyakt = () => {
 
     const aboutHeadRef = useRef();
     const paraRef = useRef();
 
 useGSAP(() => {
-  gsap.set(".avaykt-card", { opacity: 0, y: 60 });
+  gsap.set(".avyakt-card", { opacity: 0, y: 60 });
 
-  ScrollTrigger.batch(".avaykt-card", {
+  ScrollTrigger.batch(".avyakt-card", {
     start: "top 80%",
     onEnter: batch => {
       gsap.to(batch, {
@@ -72,7 +72,7 @@ gsap.from(paraRef.current,{
     <section className="bg-beige-300 min-h-[130vh] py-20 text-stone-900">
 
       <h2 ref={aboutHeadRef} className="text-5xl font-bold text-center">
-        About <span className="text-orange-600">Avaykt Ehsaas</span>
+        About <span className="text-orange-600">Avyakt Ehsaas</span>
       </h2>
 
       <p
@@ -83,10 +83,10 @@ gsap.from(paraRef.current,{
         accessible, measurable, and scientifically validated.
       </p>
 
-      <div className="avaykt-container grid grid-cols-1 md:grid-cols-2 gap-12 mx-4 mt-16 md:mx-20">
+      <div className="avyakt-container grid grid-cols-1 md:grid-cols-2 gap-12 mx-4 mt-16 md:mx-20">
 
         {/* CARD 1 */}
-        <Card className="avaykt-card hover:scale-105 transition-all duration-300">
+        <Card className="avyakt-card hover:scale-105 transition-all duration-300">
           <CardHeader
             title="Neuroscience Based"
             subtitle="Scientifically proven methods"
@@ -111,7 +111,7 @@ gsap.from(paraRef.current,{
 
 
         {/* CARD 2 */}
-        <Card className="avaykt-card hover:scale-105 transition-all duration-300">
+        <Card className="avyakt-card hover:scale-105 transition-all duration-300">
           <CardHeader
             title="Daily Live Sessions"
             subtitle="Anytime, Anywhere"
@@ -135,7 +135,7 @@ gsap.from(paraRef.current,{
 
 
         {/* CARD 3 */}
-        <Card className="avaykt-card hover:scale-105 transition-all duration-300">
+        <Card className="avyakt-card hover:scale-105 transition-all duration-300">
           <CardHeader
             title="Community Support"
             subtitle="Grow with like-minded souls"
@@ -159,7 +159,7 @@ gsap.from(paraRef.current,{
 
 
         {/* CARD 4 */}
-        <Card className="avaykt-card hover:scale-105 transition-all duration-300">
+        <Card className="avyakt-card hover:scale-105 transition-all duration-300">
           <CardHeader
             title="Inner Healing"
             subtitle="Balance your mind & soul"
@@ -186,4 +186,4 @@ gsap.from(paraRef.current,{
   )
 }
 
-export default AboutAvaykt
+export default AboutAvyakt

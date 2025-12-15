@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 const steps = [
   {
     id: 1,
-    title: "Join Avaykt",
+    title: "Join Avyakt",
     desc: "Create your account and become part of a conscious community.",
     icon: <Sparkles className="w-6 h-6" />
   },
@@ -88,7 +88,7 @@ const HowItWorks = () => {
         <h2 
         ref={headRef}
         className="text-4xl font-bold text-gray-800 mb-3">
-          How Avaykt Ehsaas <span className="text-orange-600">Works</span>
+          How Avyakt Ehsaas <span className="text-orange-600">Works</span>
         </h2>
         <p 
         ref={paraRef}

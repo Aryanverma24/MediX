@@ -2,7 +2,7 @@ import LandingSidebar from './LandingSidebar/LandingSidebar'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import HeroSection from './HeroSection'
-import AboutAvaykt from './AboutAvaykt'
+import AboutAvyakt from './AboutAvyakt'
 import HowItWorks from './HowItsWork'
 import ProgramsAndBenefits from './ProgramsAndBenefits'
 import TestimonialCarousel from './TestimonialCarousel'
@@ -16,7 +16,7 @@ const LandingPage = () => {
     <div className='bg-gradient-to-r from-white/90 to-white/80 min-h-screen '>
       <LandingSidebar />
       <HeroSection />
-      <AboutAvaykt />
+      <AboutAvyakt />
       <HowItWorks />
       <ProgramsAndBenefits />
       <TestimonialCarousel />

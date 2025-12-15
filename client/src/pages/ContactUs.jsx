@@ -89,7 +89,7 @@ const ContactUs = () => {
                        bg-gradient-to-r from-orange-600 to-amber-500
                        bg-clip-text text-transparent"
           >
-            Connect with Avaykt Ehsaas
+            Connect with Avyakt Ehsaas
           </motion.h1>
 
           <motion.p
@@ -131,7 +131,7 @@ const ContactUs = () => {
               <ContactCard
                 icon={<FiMail />}
                 title="Email Support"
-                value="support@avaykt.com"
+                value="support@avyakt.com"
               />
 
               <ContactCard

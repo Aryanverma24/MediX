@@ -32,7 +32,7 @@ const TestimonialCarousel = () => {
   return (
     <section className="py-20 bg-white">
       <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-12">
-        What People Say <span className="text-orange-600">About Avaykt</span> 
+        What People Say <span className="text-orange-600">About Avyakt</span> 
       </h2>
 
       <div className="max-w-6xl mx-auto px-6">

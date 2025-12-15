@@ -62,7 +62,7 @@ const AboutUs = () => {
             variants={itemVariants}
             className="mt-6 text-xl text-gray-700 max-w-3xl mx-auto"
           >
-            Avaykt Ehsaas is a conscious meditation and neuroscience platform
+            Avyakt Ehsaas is a conscious meditation and neuroscience platform
             designed to bring clarity, emotional healing, and deep self-awareness.
           </motion.p>
 
@@ -267,7 +267,7 @@ const AboutUs = () => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="max-w-3xl mx-auto text-xl"
         >
-          Join Avaykt Ehsaas and begin your transformation journey today. 
+          Join Avyakt Ehsaas and begin your transformation journey today. 
           A peaceful mind is the greatest power you possess.
         </motion.p>
 

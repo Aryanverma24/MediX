@@ -1,6 +1,6 @@
 import React , {useState} from 'react'
 import { Link , useNavigate } from 'react-router-dom'
-import logo from '../../../assets/avaykt-ehsaas-logo.png'
+import logo from '../../../assets/avyakt-ehsaas-logo.png'
 import { useAuth } from '../../../hooks/useAuth'
 import SidebarLink from '../../../components/ui/SidebarLink'
 import { FiMenu , FiX , FiSettings , FiPhoneCall , FiLogOut , FiUser, FiHome, FiSearch ,  FiBook , FiSunrise} from 'react-icons/fi'
@@ -78,7 +78,7 @@ const LandingSidebar = () => {
             <img src={logo} alt="logo" className="rounded-xl" />
             </div>
             <h1 className="text-lg ml-3 font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent tracking-wide">
-              Avaykt-Ehsaas
+              Avyakt-Ehsaas
             </h1>
             </Link>  
          

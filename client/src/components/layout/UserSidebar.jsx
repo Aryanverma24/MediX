@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import logo from "../../assets/avaykt-ehsaas-logo.png";
+import logo from "../../assets/avyakt-ehsaas-logo.png";
 
 import {
   FiUser,
@@ -81,7 +81,7 @@ const UserSidebar = () => {
             </div>
             <h1 className="text-lg ml-3 font-extrabold bg-gradient-to-r 
               from-amber-600 to-orange-600 bg-clip-text text-transparent">
-              Avaykt-Ehsaas
+              Avyakt-Ehsaas
             </h1>
           </Link>
 
