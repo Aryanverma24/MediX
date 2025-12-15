@@ -28,6 +28,7 @@ import UserLayout from "./components/layout/UserLayout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
+import Programs from "./pages/Programs";
 import AttendanceList from "./pages/admin/AttendanceList";
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
             />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/programs" element={<Programs />} />
 
               <Route
               path="/admin/dashboard"
