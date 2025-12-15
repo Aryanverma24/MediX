@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar";
+import Footer from "./LandingPage/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
