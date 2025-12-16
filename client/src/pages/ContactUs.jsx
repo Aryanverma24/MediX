@@ -1,162 +1,173 @@
-import React, { useState } from "react"
-import { motion } from "framer-motion"
-import { FiMail, FiPhone, FiMapPin, FiSend } from "react-icons/fi"
-import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi'
 import Footer from "./LandingPage/Footer"
+import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+    transition: { staggerChildren: 0.15 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { ease: 'easeOut', duration: 0.5 } }
 }
 
 const ContactCard = ({ icon, title, value }) => (
   <motion.div
-    variants={fadeUp}
-    whileHover={{ y: -4 }}
-    className="flex gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition"
+    variants={itemVariants}
+    whileHover={{ y: -2 }}
+    className="flex items-center gap-4 bg-white rounded-xl px-4 py-3 border border-gray-200 shadow-sm"
   >
-    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-orange-500 text-xl">
+    <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-orange-100 text-orange-600 text-base">
       {icon}
     </div>
     <div>
-      <p className="text-xs uppercase tracking-wide text-gray-500">{title}</p>
-      <p className="mt-1 text-lg font-semibold text-gray-900">{value}</p>
+      <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">{title}</p>
+      <p className="text-sm font-medium text-gray-800">{value}</p>
     </div>
   </motion.div>
 )
 
 const ContactUs = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" })
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    alert("Message sent successfully ✨")
-    setForm({ name: "", email: "", message: "" })
+    alert('Thank you! Your message has been sent.')
+    setForm({ name: '', email: '', message: '' })
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-orange-50">
       <LandingSidebar />
 
-      {/* HERO */}
-      <section className="pt-32 pb-24">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="text-5xl md:text-6xl font-semibold tracking-tight"
-          >
-            Let’s Talk
-          </motion.h1>
-
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="mt-6 max-w-2xl mx-auto text-lg text-gray-600"
-          >
-            Whether you have a question, collaboration idea, or just want to say
-            hello — we’d love to hear from you.
-          </motion.p>
-        </div>
+      {/* Page Heading */}
+      <section className="pt-28 pb-16 text-center max-w-4xl mx-auto px-6">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900"
+        >
+          Contact <span className="text-orange-500">Avyakt Ehsaas</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mt-3 text-base text-gray-600"
+        >
+          We'd love to hear from you. Reach out for programs, partnerships, or general queries.
+        </motion.p>
       </section>
 
-      {/* CONTENT */}
-      <section className="pb-32">
-        <div className="mx-auto max-w-6xl px-6 grid gap-16 md:grid-cols-2">
+      {/* Cards + Image */}
+      <section className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+        {/* Left: Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="space-y-4"
+        >
+          <ContactCard icon={<FiMail />} title="Email" value="support@avyaktehsaas.com" />
+          <ContactCard icon={<FiPhone />} title="Phone" value="+91 98765 43210" />
+          <ContactCard icon={<FiMapPin />} title="Office" value="Gurgaon, Haryana, India" />
+        </motion.div>
 
-          {/* LEFT */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-6"
+        {/* Right: Animated Image */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="flex justify-center"
+        >
+          <motion.img
+            src="/assets/meditation-contact.png"
+            alt="Meditation"
+            className="w-full max-w-md rounded-3xl shadow-lg"
+            whileHover={{ scale: 1.03 }}
+          />
+        </motion.div>
+      </section>
+
+      {/* Map + Form */}
+      <section className="max-w-7xl mx-auto px-6 mt-24 pb-28 grid lg:grid-cols-2 gap-16 items-start">
+        {/* Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm h-[420px]"
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d877.1040859706244!2d77.11484605038952!3d28.436863216602035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1f4f89848ec1%3A0x148665ba85b67df2!2sAvyakt%20Ehsaas!5e0!3m2!1sen!2sin!4v1765907719727!5m2!1sen!2sin"
+            className="w-full h-full border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </motion.div>
+
+        {/* Form */}
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-3xl p-8 border border-gray-200 shadow-md space-y-5"
+        >
+          <h3 className="text-2xl font-semibold text-gray-900">Send a Message</h3>
+
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            required
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-orange-500 outline-none"
+          />
+
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="Your Email"
+            required
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-orange-500 outline-none"
+          />
+
+          <textarea
+            name="message"
+            rows="5"
+            value={form.message}
+            onChange={handleChange}
+            placeholder="Your Message"
+            required
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-orange-500 outline-none resize-none"
+          />
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            type="submit"
+            className="w-full bg-orange-500 text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2"
           >
-            <h2 className="text-3xl font-semibold">
-              Contact Information
-            </h2>
-
-            <ContactCard
-              icon={<FiMail />}
-              title="Email"
-              value="support@avyakt.com"
-            />
-
-            <ContactCard
-              icon={<FiPhone />}
-              title="Phone"
-              value="+91 98765 43210"
-            />
-
-            <ContactCard
-              icon={<FiMapPin />}
-              title="Location"
-              value="Online · Worldwide"
-            />
-          </motion.div>
-
-          {/* RIGHT FORM */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="rounded-3xl bg-white border border-gray-200 p-10 shadow-sm"
-          >
-            <h3 className="text-2xl font-semibold mb-8">
-              Send a Message
-            </h3>
-
-            <div className="space-y-5">
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Your name"
-                required
-                className="w-full rounded-xl border border-gray-300 px-5 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition"
-              />
-
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Your email"
-                required
-                className="w-full rounded-xl border border-gray-300 px-5 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition"
-              />
-
-              <textarea
-                name="message"
-                rows="5"
-                value={form.message}
-                onChange={handleChange}
-                placeholder="Your message"
-                required
-                className="w-full rounded-xl border border-gray-300 px-5 py-3 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none resize-none transition"
-              />
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className="mt-4 w-full flex items-center justify-center gap-2 rounded-full bg-orange-500 px-6 py-4 text-white font-semibold shadow hover:bg-orange-600 transition"
-              >
-                Send Message <FiSend />
-              </motion.button>
-            </div>
-          </motion.form>
-        </div>
+            Send Message <FiSend />
+          </motion.button>
+        </motion.form>
       </section>
 
       <Footer />
@@ -164,4 +175,4 @@ const ContactUs = () => {
   )
 }
 
-export default ContactUs
+export default ContactUs;
