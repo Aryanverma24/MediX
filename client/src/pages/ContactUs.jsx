@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi'
 import Footer from "./LandingPage/Footer"
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
+import ContactImage from '../assets/contactUs.jpg'
 
 // Animation Variants
 const containerVariants = {
@@ -93,7 +94,7 @@ const ContactUs = () => {
           className="flex justify-center"
         >
           <motion.img
-            src="/assets/meditation-contact.png"
+            src={ContactImage}
             alt="Meditation"
             className="w-full max-w-md rounded-3xl shadow-lg"
             whileHover={{ scale: 1.03 }}
