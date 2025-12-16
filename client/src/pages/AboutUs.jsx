@@ -4,6 +4,7 @@ import { FaBrain, FaUsers, FaLeaf, FaClock } from "react-icons/fa"
 import { Sparkles, Heart, ShieldCheck } from "lucide-react"
 import Footer from "./LandingPage/Footer" // Assuming these components exist
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar" // Assuming these components exist
+import AboutUsImage from "../assets/aboutUs.webp"
 
 // --- Framer Motion Variants for Staggered Animations ---
 const containerVariants = {
@@ -25,58 +26,68 @@ const AboutUs = () => {
     <div className="bg-white overflow-hidden font-sans">
       <LandingSidebar />
 
-      {/* ===================================== */}
-      {/* 🌟 HERO SECTION (With Background Image Concept) */}
-      {/* ===================================== */}
-      <section className="relative min-h-[95vh] flex items-center justify-center text-center p-6 sm:p-10 bg-gradient-to-br from-orange-50 to-amber-50">
-        
-        {/* Background Image Placeholder and Overlay */}
-        <div className="absolute inset-0 z-0">
-          {/* Use a clear, warm, nature-themed image for a real app */}
-          <div className="absolute inset-0 bg-cover bg-center opacity-10"
-               style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1543852786-1cf6624b9987?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)' }} 
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-orange-50/70 to-white/90" />
-        </div>
+   {/* ===================================== */}
+{/* 🌟 HERO SECTION (Split Layout) */}
+{/* ===================================== */}
+<section className="relative min-h-[95vh] flex items-center bg-gradient-to-br from-orange-50 to-amber-50 overflow-hidden">
 
-        {/* Decorative Orbs (Enhanced Blur and Color) */}
-        <div className="absolute -top-10 left-0 w-[400px] h-[400px] bg-amber-300/30 blur-3xl rounded-full animate-pulse-slow" />
-        <div className="absolute bottom-10 right-0 w-[300px] h-[300px] bg-orange-200/40 blur-3xl rounded-full animate-pulse-slow delay-500" />
+  {/* soft blobs */}
+  <div className="absolute -top-10 left-0 w-[400px] h-[400px] bg-amber-300/30 blur-3xl rounded-full animate-pulse-slow" />
+  <div className="absolute bottom-10 right-0 w-[300px] h-[300px] bg-orange-200/40 blur-3xl rounded-full animate-pulse-slow delay-500" />
 
+  <motion.div
+    className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"
+    initial="hidden"
+    animate="visible"
+    variants={containerVariants}
+  >
 
-        <motion.div 
-          className="max-w-5xl relative z-10"
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.h1
-            variants={itemVariants}
-            className="text-6xl md:text-7xl font-extrabold leading-tight tracking-tighter
-                       bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent"
-          >
-            A Conscious Space for Your Journey Home
-          </motion.h1>
+    {/* LEFT TEXT */}
+    <div className="text-center md:text-left">
+      <motion.h1
+        variants={itemVariants}
+        className="text-5xl md:text-6xl font-extrabold leading-tight
+        bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent"
+      >
+        A Conscious Space for Your Journey Home
+      </motion.h1>
 
-          <motion.p
-            variants={itemVariants}
-            className="mt-6 text-xl text-gray-700 max-w-3xl mx-auto"
-          >
-            Avyakt Ehsaas is a conscious meditation and neuroscience platform
-            designed to bring clarity, emotional healing, and deep self-awareness.
-          </motion.p>
+      <motion.p
+        variants={itemVariants}
+        className="mt-6 text-xl text-gray-700 max-w-xl"
+      >
+        Avyakt Ehsaas is a conscious meditation and neuroscience platform
+        designed to bring clarity, emotional healing, and deep self-awareness.
+      </motion.p>
 
-          <motion.div variants={itemVariants} className="mt-12 flex justify-center gap-6 flex-wrap">
-            <button className="px-10 py-4 bg-orange-500 text-white rounded-full font-bold shadow-lg shadow-orange-300/50 hover:bg-orange-600 transform hover:scale-[1.02] transition duration-300">
-              Start Your Journey
-            </button>
-            <button className="px-10 py-4 border-2 border-orange-400 text-orange-600 rounded-full font-bold hover:bg-orange-50 transition duration-300">
-              Explore Programs
-            </button>
-          </motion.div>
+      <motion.div variants={itemVariants} className="mt-10 flex gap-5 flex-wrap">
+        <button className="px-10 py-4 bg-orange-500 text-white rounded-full font-bold shadow-lg shadow-orange-300/50 hover:bg-orange-600 transition">
+          Start Your Journey
+        </button>
+        <button className="px-10 py-4 border-2 border-orange-400 text-orange-600 rounded-full font-bold hover:bg-orange-50 transition">
+          Explore Programs
+        </button>
+      </motion.div>
+    </div>
 
-        </motion.div>
-      </section>
+    {/* RIGHT IMAGE */}
+    <motion.div
+      variants={itemVariants}
+      className="relative flex justify-center"
+    >
+      <img
+        src={AboutUsImage} 
+        alt="Meditation Illustration"
+        className="w-[90%] max-w-md drop-shadow-2xl"
+      />
+
+      {/* glow */}
+      <div className="absolute inset-0 bg-orange-300/20 blur-3xl rounded-full -z-10" />
+    </motion.div>
+
+  </motion.div>
+</section>
+
 
       {/* ===================================== */}
       {/* 🧠 WHO WE ARE (Values/Features) */}
@@ -244,44 +255,47 @@ const AboutUs = () => {
         </div>
       </section>
 
+{/* ===================================== */}
+{/* 📢 FINAL MESSAGE (Light CTA) */}
+{/* ===================================== */}
+<section className="relative py-28 bg-gradient-to-b from-orange-50 to-white text-center overflow-hidden">
 
-      {/* ===================================== */}
-      {/* 📢 FINAL MESSAGE (CTA Banner) */}
-      {/* ===================================== */}
-      <section className="bg-gradient-to-br from-orange-500 to-amber-500 py-28 text-white text-center">
+  {/* background glow */}
+  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-orange-200/40 blur-3xl rounded-full" />
 
-        <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl font-extrabold mb-6 tracking-tight"
-        >
-          This is your time to awaken.
-        </motion.h2>
+  <motion.h2
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="text-5xl font-extrabold mb-6
+    bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent"
+  >
+    This is your time to awaken.
+  </motion.h2>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="max-w-3xl mx-auto text-xl"
-        >
-          Join Avyakt Ehsaas and begin your transformation journey today. 
-          A peaceful mind is the greatest power you possess.
-        </motion.p>
+  <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.2 }}
+    className="max-w-3xl mx-auto text-xl text-gray-700"
+  >
+    Join Avyakt Ehsaas and begin your transformation journey today.
+    A peaceful mind is the greatest power you possess.
+  </motion.p>
 
-        <motion.button 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-12 px-12 py-4 bg-white text-orange-600 rounded-full font-extrabold text-lg shadow-2xl hover:scale-105 transition duration-300"
-        >
-          Begin Now
-        </motion.button>
+  <motion.button
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.4 }}
+    className="mt-12 px-12 py-4 bg-orange-500 text-white rounded-full font-extrabold
+    shadow-xl shadow-orange-300/50 hover:scale-105 transition"
+  >
+    Begin Now
+  </motion.button>
+</section>
 
-      </section>
 
       <Footer />
 
