@@ -83,7 +83,7 @@ const AboutUs = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="relative flex justify-center"
           >
@@ -93,7 +93,8 @@ const AboutUs = () => {
               className="w-[90%] max-w-md drop-shadow-2xl"
             />
             <div className="absolute inset-0 bg-orange-300/20 blur-3xl rounded-full -z-10" />
-          </motion.div>
+          </motion.div> */}
+          
         </motion.div>
       </section>
 

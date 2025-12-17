@@ -10,6 +10,8 @@ const BrainBackground = () => {
   const scale = useTransform(scrollYProgress, [0, 1], [1.3, 0.6])
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.15, 0.5, 0.85])
 
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 360])
+
   return (
     <motion.div
       style={{
@@ -17,6 +19,7 @@ const BrainBackground = () => {
         y,
         scale,
         opacity,
+        rotate
       }}
       className="brain-bg"
     >
