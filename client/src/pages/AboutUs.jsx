@@ -29,12 +29,13 @@ const itemVariants = {
 
 const AboutUs = () => {
   return (
-    <div className="relative bg-white overflow-hidden font-sans">
+    <div className="relative overflow-hidden font-sans">
       <LandingSidebar />
 
       <BrainBackground />
 
-      {/* ===== GLOBAL SOFT ORANGE BLOBS ===== */}
+     <div className="relative z-10">
+       {/* ===== GLOBAL SOFT ORANGE BLOBS ===== */}
       <div className="pointer-events-none absolute -top-[200px] -left-[200px] w-[500px] h-[500px] bg-orange-300/30 blur-[120px] rounded-full" />
       <div className="pointer-events-none absolute top-[40%] -right-[250px] w-[550px] h-[550px] bg-amber-300/25 blur-[140px] rounded-full" />
       <div className="pointer-events-none absolute -bottom-[200px] left-[20%] w-[600px] h-[600px] bg-orange-200/30 blur-[160px] rounded-full" />
@@ -181,6 +182,7 @@ const AboutUs = () => {
           Begin Now
         </motion.button>
       </section>
+     </div>
 
       <Footer />
     </div>

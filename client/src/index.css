@@ -91,18 +91,14 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: -1;
+  transform: translate(-50%, -50%);
   pointer-events: none;
-  filter: blur(0.5px);
+  z-index: 0;
+  filter: drop-shadow(0 0 80px rgba(120, 180, 255, 0.25));
 }
 
 .brain-bg img {
   width: 700px;
   max-width: 80vw;
   opacity: 1;
-  transition: filter 0.3s ease;
-}
-
-.brain-bg {
-  filter: drop-shadow(0 0 80px rgba(120, 180, 255, 0.25));
 }
