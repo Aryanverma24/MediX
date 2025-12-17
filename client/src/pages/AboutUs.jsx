@@ -43,7 +43,8 @@ const AboutUs = () => {
       {/* ===================================== */}
       {/* 🌟 HERO SECTION */}
       {/* ===================================== */}
-      <section className="relative min-h-[95vh] flex items-center bg-white overflow-hidden">
+     <section className="relative min-h-[95vh] flex items-center overflow-hidden
+  backdrop-blur-[2px]">
         <motion.div
           className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center"
           initial="hidden"
@@ -167,8 +168,8 @@ const AboutUs = () => {
       {/* ===================================== */}
       {/* 📢 FINAL CTA */}
       {/* ===================================== */}
-      <section className="relative py-28 bg-white text-center overflow-hidden">
-        <div className="absolute inset-0 bg-orange-200/40 blur-[150px] rounded-full" />
+      <section className="relative py-28 text-center overflow-hidden">
+        <div className="absolute inset-0 rounded-full" />
 
         <motion.h2 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
           This is your time to awaken.
