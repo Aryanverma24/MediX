@@ -5,6 +5,7 @@ import { Sparkles, Heart, ShieldCheck } from "lucide-react"
 import Footer from "./LandingPage/Footer"
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
 import AboutUsImage from "../assets/aboutUs.webp"
+import BrainBackground from "./BrainBackground"
 
 /* ================= Framer Motion Variants ================= */
 
@@ -30,6 +31,8 @@ const AboutUs = () => {
   return (
     <div className="relative bg-white overflow-hidden font-sans">
       <LandingSidebar />
+
+      <BrainBackground />
 
       {/* ===== GLOBAL SOFT ORANGE BLOBS ===== */}
       <div className="pointer-events-none absolute -top-[200px] -left-[200px] w-[500px] h-[500px] bg-orange-300/30 blur-[120px] rounded-full" />
