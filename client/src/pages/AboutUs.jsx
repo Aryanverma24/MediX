@@ -6,6 +6,8 @@ import Footer from "./LandingPage/Footer"
 import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
 import AboutUsImage from "../assets/aboutUs.webp"
 import BrainBackground from "./BrainBackground"
+import { useRef } from "react"
+
 
 /* ================= Framer Motion Variants ================= */
 
@@ -28,11 +30,14 @@ const itemVariants = {
 /* ================= MAIN COMPONENT ================= */
 
 const AboutUs = () => {
+
+  const ctaRef = useRef(null)
+
   return (
     <div className="relative overflow-hidden font-sans">
       <LandingSidebar />
 
-      <BrainBackground />
+      <BrainBackground  ctaRef={ctaRef}/>
 
      <div className="relative z-10">
        {/* ===== GLOBAL SOFT ORANGE BLOBS ===== */}
@@ -82,7 +87,7 @@ const AboutUs = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-          <motion.div
+          {/* <motion.div
             variants={itemVariants}
             className="relative flex justify-center"
           >
@@ -92,7 +97,7 @@ const AboutUs = () => {
               className="w-[90%] max-w-md drop-shadow-2xl"
             />
             <div className="absolute inset-0 bg-orange-300/20 blur-3xl rounded-full -z-10" />
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </section>
 
@@ -167,7 +172,9 @@ const AboutUs = () => {
       {/* ===================================== */}
       {/* 📢 FINAL CTA */}
       {/* ===================================== */}
-      <section className="relative py-28 bg-white text-center overflow-hidden">
+      <section 
+      ref={ctaRef}
+      className="relative py-28 bg-white text-center overflow-hidden">
         <div className="absolute inset-0 bg-orange-200/40 blur-[150px] rounded-full" />
 
         <motion.h2 className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">

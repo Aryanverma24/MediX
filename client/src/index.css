@@ -88,7 +88,7 @@ body {
 /*  brain css for about page*/
 
 .brain-bg {
-  position: fixed;
+  position: sticky;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
