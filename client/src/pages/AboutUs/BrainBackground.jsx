@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion"
-import brainImg from '../assets/Brain.png'
+import brainImg from '../../assets/Brain.png'
 
 const BrainBackground = () => {
   const { scrollYProgress } = useScroll()
