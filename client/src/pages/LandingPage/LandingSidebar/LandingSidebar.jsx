@@ -91,7 +91,7 @@ const LandingSidebar = () => {
                 className="flex items-center"
               >
                 <SidebarLink
-                  icon={item.icon}
+                  // icon={item.icon}
                   label={item.label}
                   path={item.path}
                   className="text-orange-500 hover:orange-600 transition font-medium"
