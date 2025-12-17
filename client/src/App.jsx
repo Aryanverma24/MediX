@@ -27,7 +27,7 @@ import AdminLayout from "./components/layout/AdminLayout";
 import UserLayout from "./components/layout/UserLayout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import ContactUs from "./pages/ContactUs";
-import AboutUs from "./pages/AboutUs";
+import AboutUs from "./pages/AboutUs/AboutUs";
 import Programs from "./pages/Programs";
 import AttendanceList from "./pages/admin/AttendanceList";
 import Research from "./pages/Research";

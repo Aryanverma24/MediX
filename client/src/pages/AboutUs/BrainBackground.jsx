@@ -5,10 +5,10 @@ const BrainBackground = () => {
   const { scrollYProgress } = useScroll()
 
   // Scroll based transforms
-  const x = useTransform(scrollYProgress, [0, 1], ["-50%", "-80%"])
+  const x = useTransform(scrollYProgress, [0, 1], ["-50%", "-130%"])
   const y = useTransform(scrollYProgress, [0, 1], ["-50%", "-40%"])
   const scale = useTransform(scrollYProgress, [0, 1], [1.3, 0.6])
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.15, 0.5, 0.85])
+  // const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.15, 0.5, 0.85])
 
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 360])
 
@@ -18,8 +18,9 @@ const BrainBackground = () => {
         x,
         y,
         scale,
-        opacity,
-        rotate
+        // opacity,
+        rotate,
+        perspective: 1200,
       }}
       className="brain-bg"
     >

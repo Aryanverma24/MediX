@@ -2,9 +2,9 @@ import React from "react"
 import { motion } from "framer-motion"
 import { FaBrain, FaUsers, FaLeaf, FaClock } from "react-icons/fa"
 import { Sparkles, Heart, ShieldCheck } from "lucide-react"
-import Footer from "./LandingPage/Footer"
-import LandingSidebar from "./LandingPage/LandingSidebar/LandingSidebar"
-import AboutUsImage from "../assets/aboutUs.webp"
+
+import LandingSidebar from "../LandingPage/LandingSidebar/LandingSidebar"
+
 import BrainBackground from "./BrainBackground"
 
 /* ================= Framer Motion Variants ================= */
@@ -27,7 +27,7 @@ const itemVariants = {
 
 /* ================= MAIN COMPONENT ================= */
 
-const AboutUs = () => {
+const AboutSection = () => {
   return (
     <div className="relative overflow-hidden font-sans">
       <LandingSidebar />
@@ -43,8 +43,7 @@ const AboutUs = () => {
       {/* ===================================== */}
       {/* 🌟 HERO SECTION */}
       {/* ===================================== */}
-     <section className="relative min-h-[95vh] flex items-center overflow-hidden
-  backdrop-blur-[2px]">
+     <section className="relative min-h-[95vh] flex items-center overflow-hidden">
         <motion.div
           className="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center"
           initial="hidden"
@@ -94,7 +93,7 @@ const AboutUs = () => {
             />
             <div className="absolute inset-0 bg-orange-300/20 blur-3xl rounded-full -z-10" />
           </motion.div> */}
-          
+
         </motion.div>
       </section>
 
@@ -185,13 +184,11 @@ const AboutUs = () => {
         </motion.button>
       </section>
      </div>
-
-      <Footer />
     </div>
   )
 }
 
-export default AboutUs
+export default AboutSection
 
 /* ================= SUB COMPONENTS ================= */
 
