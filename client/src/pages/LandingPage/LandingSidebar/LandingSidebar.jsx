@@ -186,19 +186,7 @@ const LandingSidebar = () => {
                     {item.label}
                   </motion.button>
                 ))}
-              {user?.role === "admin" && (
-                <motion.button
-                  onClick={() => {
-                    navigate("/admin/dashboard");
-                    setOpenMenu(false);
-                  }}
-                  whileHover={{ scale: 1.03 }}
-                  className="flex items-center gap-3 text-orange-500 p-3 rounded-lg hover:bg-orange-50 transition w-full text-left"
-                >
-                  <MdDashboard className="text-orange-600" /> Admin Panel
-                </motion.button>
-              )}
-
+        
               {user?.name ? (
                 <>
                   {/* Mobile User Info */}
