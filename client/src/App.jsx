@@ -249,9 +249,12 @@ function App() {
             <Route
               path="/join-meeting"
               element={
-                  <UserLayout>
+                user ? ( 
+                   <UserLayout>
                     <JoinMeeting />
-                  </UserLayout>
+                  </UserLayout>) : (
+                    <Navigate to="/auth/login" replace />
+                  )
               }
             />
 

@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import { FiPlay, FiClock } from 'react-icons/fi';
+import Image from "../assets/aboutUs.webp";
+
+const thumbnailQualities = ["maxresdefault.jpg", "hqdefault.jpg", "mqdefault.jpg", "default.jpg"];
+
+const getVideoId = (url) => {
+  if (!url) return null;
+  const match = url.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/);
+  return match ? match[1] : null;
+};
 
 const VideoCard = ({ video, onSelect }) => {
+  const videoId = getVideoId(video.url);
+  const [thumbIndex, setThumbIndex] = useState(0);
 
-  const getThumbnailUrl = (url) => {
-    const videoId = url.split('v=')[1];
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  };
+  const thumbnailUrl = videoId 
+    ? `https://img.youtube.com/vi/${videoId}/${thumbnailQualities[thumbIndex]}`
+    : Image;
 
   return (
     <div 
@@ -15,8 +25,16 @@ const VideoCard = ({ video, onSelect }) => {
     >
       <div className="relative pb-[56.25%] bg-gray-100">
         <img 
-          src={getThumbnailUrl(video.url)} 
+          src={thumbnailUrl} 
           alt={video.title}
+          onError={(e) => {
+            if (thumbIndex < thumbnailQualities.length - 1) {
+              setThumbIndex(thumbIndex + 1); // try next quality
+            } else {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = Image; // fallback local
+            }
+          }}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
@@ -27,18 +45,16 @@ const VideoCard = ({ video, onSelect }) => {
       </div>
       <div className="p-4">
         <h4 className="font-medium text-gray-900 line-clamp-2">{video.title}</h4>
-        <div className="flex items-center text-sm text-gray-500 mt-1">
-          <FiClock className="mr-1" />
-          <span>{video.duration}</span>
-        </div>
       </div>
     </div>
   );
 };
 
 const VideoPlayer = ({ video, onClose, onBack }) => {
-  const videoId = video.url.split('v=')[1];
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0`;
+  const videoId = getVideoId(video.url);
+  const embedUrl = videoId 
+    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0`
+    : "";
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-lg">
@@ -53,16 +69,20 @@ const VideoPlayer = ({ video, onClose, onBack }) => {
           </svg>
         </button>
       </div>
-      <div className="aspect-w-16 aspect-h-9 mb-4">
-        <iframe
-          className="w-full h-96 rounded-lg"
-          src={embedUrl}
-          title={video.title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+      {embedUrl ? (
+        <div className="aspect-w-16 aspect-h-9 mb-4">
+          <iframe
+            className="w-full h-96 rounded-lg"
+            src={embedUrl}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      ) : (
+        <img src={Image} alt="Video not available" className="w-full h-96 object-cover rounded-lg mb-4" />
+      )}
       <button
         onClick={onBack}
         className="text-purple-600 hover:text-purple-800 font-medium flex items-center"
@@ -73,11 +93,11 @@ const VideoPlayer = ({ video, onClose, onBack }) => {
   );
 };
 
-const SavedVideos = ({ videos, onBack, onJoinClick }) => {
+const SavedVideos = ({ videos }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-20">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-8">

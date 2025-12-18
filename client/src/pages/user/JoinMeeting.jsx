@@ -5,6 +5,8 @@ import { FiVideo, FiUser, FiClock, FiCalendar, FiArrowRight } from 'react-icons/
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import API from '../../utils/api';
 import { useAuth } from '../../hooks/useAuth';
+import SavedVideos  from '../../components/SavedVideos'
+import { meditationVideos } from '../../data/meditationVideos';
 
 const JoinMeeting = () => {
   const { user } = useAuth();
@@ -178,6 +180,34 @@ const handleNextPage = () => {
 
   const sessionTime = new Date(session.startTime || `${new Date().toISOString().split('T')[0]}T${meeting.defaultTime}`);
   const isSessionLive = session.status === 'live' || session.status === 'scheduled';
+
+
+const now = new Date();
+
+const diffMs = sessionTime - now; // milliseconds difference
+let MinDiff = 0;
+
+if (diffMs <= 0) {
+  console.log("Session already started or passed");
+} else {
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  MinDiff = hours * 60 + minutes
+  console.log(
+    `Session starts in ${hours}h ${minutes}m ${seconds}s`
+  );
+}
+
+if(MinDiff > 15) {
+  return (
+   <SavedVideos 
+   videos={meditationVideos}
+   onBack={() => navigate('/dashboard')}
+  /> )
+}
+
 
   return (
     <div className="min-h-screen pt-12 bg-gradient-to-br from-purple-50 to-pink-50">
