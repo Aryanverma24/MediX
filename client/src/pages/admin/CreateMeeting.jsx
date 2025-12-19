@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { FiCalendar, FiClock, FiVideo, FiSave, FiX, FiLink, FiSettings } from 'react-icons/fi';
 import API from '../../utils/api';
+import SessionControls from './SessionControls';
+import Loader from '../../components/ui/Loader';
 
 const CreateMeeting = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [meeting, setMeeting] = useState(null);
+
+  const [sessions, setSessions] = useState([]);
+
 
   // Form state
   const [formData, setFormData] = useState({
@@ -114,6 +119,29 @@ const CreateMeeting = () => {
     { value: 5, label: 'Fri' },
     { value: 6, label: 'Sat' }
   ];
+
+  const fetchSessions = async() => {
+    try {
+      const res = await API.get('/meetings/sessions')
+      setSessions(res.data.sessions);
+    }catch (error) {
+      console.error('Error fetching sessions:', error);
+      toast.error('Failed to load sessions');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSessions()
+  },[])
+
+
+  const handleStatusChange = () => {
+    fetchSessions();
+  }
+
+  if(loading) return <Loader />
 
   return  (
   <div className="p-4 md:p-6 min-h-screen md:ml-[18rem] bg-gradient-to-br from-green-50 via-cream-50 to-white">
@@ -275,6 +303,28 @@ const CreateMeeting = () => {
           </form>
         </div>
       </div>
+
+
+         <div className="p-6">
+      <h2 className="text-2xl font-bold mb-6">Session Management</h2>
+      
+      <div className="space-y-4">
+        {sessions.map(session => (
+          <div key={session._id} className="p-4 border rounded-lg">
+            <h3 className="font-semibold">{new Date(session.startTime).toLocaleString()}</h3>
+            <p>Status: {session.status}</p>
+            <p>Attendees: {session.attendees?.length || 0}</p>
+            
+            <SessionControls 
+              session={session} 
+              onStatusChange={handleStatusChange} 
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+
     </div>
   );
 };

@@ -53,6 +53,7 @@ const SubscriptionPricing = () => {
 
       <div className="relative max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-8 justify-center">
         {plans.map((plan, i) => (
+
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 40, scale: 0.95 }}

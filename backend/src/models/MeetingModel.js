@@ -178,7 +178,7 @@ sessionSchema.methods.recordLeave = async function(userId) {
 
 // Indexes
 meetingSchema.index({ isActive: 1 });
-meetingSchema.index({ "sessions.date": 1 }); // This is now safe as we removed unique: true from sub-schema
+meetingSchema.index({ "sessions.date": 1 }); 
 meetingSchema.index({ host: 1 });
 
 const Meeting = mongoose.model("Meeting", meetingSchema);

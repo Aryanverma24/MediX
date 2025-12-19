@@ -33,6 +33,9 @@ import Programs from "./pages/Programs";
 import AttendanceList from "./pages/admin/AttendanceList";
 import Research from "./pages/Research";
 import TextLoader from "./components/ui/TextLoader";
+import MeditationVideos from "./pages/user/MeditationVideos";
+import Feedback from "./pages/user/Feedback";
+
 
 function App() {
   const { user, loadingUser } = useAuth();
@@ -97,6 +100,14 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/research" element={<Research />} />
+
+            <Route path="/meditation-videos" element={<MeditationVideos />} />
+
+            <Route
+              path="/feedback"
+              element={user ? <Feedback /> : <Navigate to="/auth/login" replace />}
+            />
+          
 
               <Route
               path="/admin/dashboard"

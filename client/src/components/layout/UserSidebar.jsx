@@ -34,6 +34,7 @@ const UserSidebar = () => {
   const loggedInMenu = [
     { icon: <FiUser />, label: "My Profile", path: "/user/profile" },
     { icon: <FiVideo />, label: "Joined Meeting", path: "/join-meeting" },
+    { icon: <FiVideo />, label: "Meditation Videos", path: "/meditation-videos" },    
   ];
 
   const loggedOutMenu = [

@@ -11,7 +11,11 @@ import {
   getMonthlyAttendees,
   LastThreeMonthAttendances,
   getTodaysAttendance,
-  getInactiveUsers
+  getInactiveUsers,
+  markSessionAsCompleted,
+  markSessionAsLive,
+  getSessionsList,
+  markSessionAsScheduled
 } from "../controllers/meetingController.js";
 
 const router = express.Router();
@@ -42,5 +46,12 @@ router.route("/last-Three-month-attendees").get(protect,admin,LastThreeMonthAtte
 router.route("/todays-attendance").get(protect,admin,getTodaysAttendance)
 
 router.route("/inactive-users").get(protect,admin,getInactiveUsers)
+
+router.route("/sessions/:sessionId/live").post(protect,admin,markSessionAsLive);
+
+router.route("/sessions/:sessionId/completed").post(protect,admin,markSessionAsCompleted)
+router.route("/sessions/:sessionId/scheduled")
+  .post(protect, admin, markSessionAsScheduled);
+router.route("/sessions").get(protect,admin,getSessionsList)
 
 export default router;

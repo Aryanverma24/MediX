@@ -619,3 +619,139 @@ export const getInactiveUsers = async (req, res) => {
     });
   }
 };
+
+export const markSessionAsLive = async(req,res) => {
+  try {
+    const meeting = await Meeting.findOne({"sessions._id" : req.params.sessionId})
+    if(!meeting){
+      return res.status(404).json({message : "Session not found"})
+    }
+    const session = meeting.sessions.id(req.params.sessionId)
+    if(!session){
+      return res.status(404).json({message : "Session not found"})
+    }
+    session.status = "live"
+    session.startTime = new Date()
+    await meeting.save()
+    res.status(200).json({
+      success : true,
+      message : "Session marked as live",
+      session : session.toObject()
+    })
+  } catch (error) {
+    console.log(error, "Internal Server Error")
+    return res.status(500).json({ message : "Internal Server Error"})
+  }
+}
+// In meetingController.js
+export const markSessionAsCompleted = async (req, res) => {
+  try {
+    const meeting = await Meeting.findOne({ "sessions._id": req.params.sessionId });
+    if (!meeting) {
+      return res.status(404).json({ message: "Meeting not found" });
+    }
+
+    const session = meeting.sessions.id(req.params.sessionId);
+    if (!session) {
+      return res.status(404).json({ message: "Session not found" });
+    }
+
+    // Add validation to ensure session is live
+    if (session.status !== 'live') {
+      return res.status(400).json({ 
+        message: `Cannot complete session. Current status is ${session.status}` 
+      });
+    }
+
+    // Update both status and endTime
+    session.status = 'completed';
+    session.endTime = new Date();
+    
+    // Mark the session as modified
+    meeting.markModified('sessions');
+    
+    await meeting.save();
+
+    res.json({ 
+      success: true, 
+      message: "Session marked as completed",
+      session: session.toObject()
+    });
+
+  } catch (error) {
+    console.error("markSessionAsCompleted error:", error);
+    res.status(500).json({ 
+      message: "Failed to update session status",
+      error: error.message
+    });
+  }
+};
+
+
+// In meetingController.js
+export const markSessionAsScheduled = async (req, res) => {
+  try {
+    const meeting = await Meeting.findOne({ "sessions._id": req.params.sessionId });
+    if (!meeting) {
+      return res.status(404).json({ message: "Meeting not found" });
+    }
+
+    const session = meeting.sessions.id(req.params.sessionId);
+    if (!session) {
+      return res.status(404).json({ message: "Session not found" });
+    }
+
+    // Only allow changing from 'completed' to 'scheduled'
+    if (session.status !== 'completed') {
+      return res.status(400).json({ 
+        message: `Cannot reschedule session. Current status is ${session.status}` 
+      });
+    }
+
+    session.status = 'scheduled';
+    session.endTime = undefined; // Clear end time when rescheduling
+    
+    meeting.markModified('sessions');
+    await meeting.save();
+
+    res.json({ 
+      success: true, 
+      message: "Session rescheduled successfully",
+      session: session.toObject()
+    });
+
+  } catch (error) {
+    console.error("markSessionAsScheduled error:", error);
+    res.status(500).json({ 
+      message: "Failed to reschedule session",
+      error: error.message
+    });
+  }
+};
+
+
+/**
+ * Get all sessions (admin only)
+ */
+export const getSessionsList = async (req, res) => {
+  try {
+    const meetings = await Meeting.find({ isActive: true })
+      .populate('sessions.attendees.user', 'name email');
+    
+    const allSessions = meetings.flatMap(meeting => 
+      meeting.sessions.map(session => ({
+        ...session.toObject(),
+        meetingTitle: meeting.title
+      }))
+    );
+    
+    // Sort by start time (newest first)
+    allSessions.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+    
+    res.json({ success: true, sessions: allSessions });
+  } catch (error) {
+    console.error("getSessions error:", error);
+    res.status(500).json({ message: "Failed to fetch sessions" });
+  }
+};
+

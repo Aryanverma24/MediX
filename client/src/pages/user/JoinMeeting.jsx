@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { FiVideo, FiUser, FiClock, FiCalendar, FiArrowRight } from 'react-icons/fi';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiVideo, FiClock, FiCalendar, FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import API from '../../utils/api';
 import { useAuth } from '../../hooks/useAuth';
-import SavedVideos  from '../../components/SavedVideos'
+import SavedVideos from '../../components/SavedVideos';
 import { meditationVideos } from '../../data/meditationVideos';
 
 const JoinMeeting = () => {
@@ -13,56 +12,44 @@ const JoinMeeting = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [joining, setJoining] = useState(false);
+
   const [meeting, setMeeting] = useState(null);
   const [session, setSession] = useState(null);
   const [userName, setUserName] = useState(user?.name || '');
   const [isInSession, setIsInSession] = useState(false);
-  
-
   const [history, setHistory] = useState([]);
-const [pagination, setPagination] = useState({
-  page: 1,
-  limit: 5,
-  total: 0,
-  pages: 1
-});
-const [loadingHistory, setLoadingHistory] = useState(false);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 5,
+    total: 0,
+    pages: 1
+  });
+  const [loadingHistory, setLoadingHistory] = useState(false);
 
-// Add this effect to fetch session history
-useEffect(() => {
-  const fetchSessionHistory = async () => {
-    try {
-      setLoadingHistory(true);
-      const res = await API.get(`/meetings/history?page=${pagination.page}&limit=${pagination.limit}`);
-      setHistory(res.data.data);
-      setPagination(prev => ({
-        ...prev,
-        total: res.data.pagination.total,
-        pages: res.data.pagination.pages
-      }));
-    } catch (error) {
-      console.error('Error fetching session history:', error);
-      toast.error('Failed to load session history');
-    } finally {
-      setLoadingHistory(false);
-    }
-  };
+  const FEEDBACK_PENDING_KEY = 'meeting_feedback_pending';
 
-  fetchSessionHistory();
-}, [pagination.page]);
+  // Fetch session history
+  useEffect(() => {
+    const fetchSessionHistory = async () => {
+      try {
+        setLoadingHistory(true);
+        const res = await API.get(`/meetings/history?page=${pagination.page}&limit=${pagination.limit}`);
+        setHistory(res.data.data);
+        setPagination(prev => ({
+          ...prev,
+          total: res.data.pagination.total,
+          pages: res.data.pagination.pages
+        }));
+      } catch (error) {
+        console.error('Error fetching session history:', error);
+        toast.error('Failed to load session history');
+      } finally {
+        setLoadingHistory(false);
+      }
+    };
 
-// Add these pagination handlers
-const handlePrevPage = () => {
-  if (pagination.page > 1) {
-    setPagination(prev => ({ ...prev, page: prev.page - 1 }));
-  }
-};
-
-const handleNextPage = () => {
-  if (pagination.page < pagination.pages) {
-    setPagination(prev => ({ ...prev, page: prev.page + 1 }));
-  }
-};
+    fetchSessionHistory();
+  }, [pagination.page]);
 
   // Fetch today's session
   useEffect(() => {
@@ -72,11 +59,11 @@ const handleNextPage = () => {
         if (res.data?.meeting) {
           setMeeting(res.data.meeting);
           setSession(res.data.meeting.session);
-          setLoading(false);
         }
       } catch (error) {
         console.error('Error fetching session:', error);
         toast.error('Failed to load session details');
+      } finally {
         setLoading(false);
       }
     };
@@ -91,18 +78,31 @@ const handleNextPage = () => {
     }
 
     setJoining(true);
-
     try {
-      // Join the session
-      const joinRes = await API.post('/meetings/join',{ userName: userName });
+      const joinRes = await API.post('/meetings/join', { userName });
       
-      // Open Zoom link in new tab
       if (joinRes.data?.redirect) {
+        if (session?._id) {
+          localStorage.setItem(
+            FEEDBACK_PENDING_KEY,
+            JSON.stringify({
+              sessionId: session._id,
+              meetingId: meeting?._id,
+              userName,
+              startedAt: Date.now()
+            })
+          );
+        }
+
         const meetingWindow = window.open(joinRes.data.redirect, '_blank');
+        if (!meetingWindow) {
+          toast.error('Popup blocked. Please allow popups and try again.');
+          setJoining(false);
+          return;
+        }
         setIsInSession(true);
         toast.success('Joining session...');
 
-        // Set up cleanup when window is closed
         const checkWindow = setInterval(() => {
           if (meetingWindow.closed) {
             clearInterval(checkWindow);
@@ -120,10 +120,24 @@ const handleNextPage = () => {
   const handleLeave = async () => {
     try {
       if (session?._id) {
+        localStorage.setItem(
+          FEEDBACK_PENDING_KEY,
+          JSON.stringify({
+            sessionId: session._id,
+            meetingId: meeting?._id,
+            userName,
+            startedAt: Date.now()
+          })
+        );
+      }
+
+      if (session?._id) {
         await API.post(`/meetings/leave/${session._id}`);
       }
       setIsInSession(false);
       setJoining(false);
+
+      window.dispatchEvent(new Event('feedback:pending'));
     } catch (error) {
       console.error('Error leaving session:', error);
     }
@@ -133,7 +147,6 @@ const handleNextPage = () => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (isInSession && session?._id) {
-        // Use sendBeacon for more reliable cleanup
         const data = new FormData();
         data.append('sessionId', session._id);
         navigator.sendBeacon(`/api/meetings/leave/${session._id}`, data);
@@ -146,6 +159,21 @@ const handleNextPage = () => {
     };
   }, [isInSession, session]);
 
+  // Calculate time until session
+  const sessionTime = new Date(session?.startTime || new Date().toISOString().split('T')[0]);
+  if (meeting?.defaultTime) {
+    const [hours, minutes] = meeting.defaultTime.split(':');
+    sessionTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+  }
+
+  const now = new Date();
+  const diffMs = sessionTime - now;
+  let MinDiff = diffMs > 0 ? Math.floor(diffMs / (1000 * 60)) : 0;
+
+  // if (MinDiff > 15) {
+  //   return <SavedVideos videos={meditationVideos} onBack={() => navigate('/dashboard')} />;
+  // }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -156,7 +184,7 @@ const handleNextPage = () => {
 
   if (!meeting || !session) {
     return (
-      <div className="min-h-screen  flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center p-6 max-w-md">
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
             <FiCalendar className="h-6 w-6 text-red-600" />
@@ -178,48 +206,43 @@ const handleNextPage = () => {
     );
   }
 
-  const sessionTime = new Date(session.startTime || `${new Date().toISOString().split('T')[0]}T${meeting.defaultTime}`);
-  const isSessionLive = session.status === 'live' || session.status === 'scheduled';
-
-
-const now = new Date();
-
-const diffMs = sessionTime - now; // milliseconds difference
-let MinDiff = 0;
-
-if (diffMs <= 0) {
-  console.log("Session already started or passed");
-} else {
-  const totalSeconds = Math.floor(diffMs / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-  MinDiff = hours * 60 + minutes
-  console.log(
-    `Session starts in ${hours}h ${minutes}m ${seconds}s`
-  );
-}
-
-if(MinDiff > 15) {
-  return (
-   <SavedVideos 
-   videos={meditationVideos}
-   onBack={() => navigate('/dashboard')}
-  /> )
-}
-
+  const isSessionLive = session.status === 'live';
+  const isSessionScheduled = session.status === 'scheduled';
+  const isSessionCompleted = session.status === 'completed';
 
   return (
     <div className="min-h-screen pt-12 bg-gradient-to-br from-purple-50 to-pink-50">
       <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            {meeting.title}
-          </h1>
-          <p className="mt-3 text-xl text-gray-500">
-            {session.status === 'completed' ? 'Session Completed' : 
-             session.status === 'live' ? 'Session in Progress' : 'Upcoming Session'}
-          </p>
+        {/* Session Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center space-x-3 mb-2">
+            <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+              {meeting.title}
+            </h1>
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+              isSessionScheduled ? 'bg-blue-100 text-blue-800' :
+              isSessionLive ? 'bg-green-100 text-green-800' :
+              'bg-gray-100 text-gray-800'
+            }`}>
+              {session.status.charAt(0).toUpperCase() + session.status.slice(1)}
+            </span>
+          </div>
+          
+          {isSessionScheduled && (
+            <p className="text-lg text-blue-600">
+              Session starts at {meeting.defaultTime} ({meeting.timezone})
+            </p>
+          )}
+          {isSessionLive && (
+            <p className="text-lg text-green-600">
+              Session is Live! Join now
+            </p>
+          )}
+          {isSessionCompleted && (
+            <p className="text-lg text-gray-600">
+              This session has ended. Check back tomorrow for the next one!
+            </p>
+          )}
         </div>
 
         <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -253,19 +276,44 @@ if(MinDiff > 15) {
                     <div className="ml-3">
                       <p className="text-sm font-medium text-gray-500">Time</p>
                       <p className="text-sm text-gray-900">
-                        {sessionTime.toLocaleTimeString('en-US', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          timeZone: meeting.timezone
-                        })}
+                        {meeting.defaultTime} ({meeting.timezone})
                       </p>
                     </div>
                   </div>
+
+                  {isSessionScheduled && (
+                      <Link 
+                      to={"/meditation-videos"}
+                      className="p-4 border-2 border-dashed border-blue-400 bg-blue-50 text-center  hover:bg-blue-400 text-blue-700 hover:text-white rounded-3xl w-72">
+                        <button className="text-sm mt-4  w-48 md:w-72">
+                         Check Saved Videos
+                        </button>
+                      </Link>
+                    )}
+
+
+                  {isSessionCompleted && session.endTime && (
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 text-purple-500">
+                        <FiClock className="h-6 w-6" />
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-500">Ended At</p>
+                        <p className="text-sm text-gray-900">
+                          {new Date(session.endTime).toLocaleTimeString('en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: meeting.timezone
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {session.status === 'completed' && (
-                  <div className="mt-6 p-4 bg-green-50 rounded-md">
-                    <p className="text-sm text-green-700">
+                {isSessionCompleted && (
+                  <div className="mt-6 p-4 bg-gray-50 rounded-md">
+                    <p className="text-sm text-gray-600">
                       This session has ended. Check back tomorrow for the next one!
                     </p>
                   </div>
@@ -292,24 +340,32 @@ if(MinDiff > 15) {
                       />
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={handleJoin}
-                      disabled={joining || !isSessionLive}
-                      className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                        !isSessionLive
-                          ? 'bg-gray-400 cursor-not-allowed'
-                          : 'bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500'
-                      }`}
-                    >
-                      {joining ? 'Joining...' : 'Join Session'}
-                      <FiArrowRight className="ml-2 h-4 w-4" />
-                    </button>
+                    {isSessionScheduled && (
+                      <div className="p-4 bg-blue-50 rounded-md">
+                        <p className="text-sm text-blue-700">
+                          Session will start at {meeting.defaultTime}. Please check back then!
+                        </p>
+                      </div>
+                    )}
 
-                    {!isSessionLive && (
-                      <p className="mt-2 text-sm text-gray-500">
-                        This session is not currently active.
-                      </p>
+                    {isSessionLive && (
+                      <button
+                        type="button"
+                        onClick={handleJoin}
+                        disabled={joining}
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      >
+                        {joining ? 'Joining...' : 'Join Session'}
+                        <FiArrowRight className="ml-2 h-4 w-4" />
+                      </button>
+                    )}
+
+                    {isSessionCompleted && (
+                      <div className="p-4 bg-gray-100 rounded-md">
+                        <p className="text-sm text-gray-700">
+                          This session has ended. Check back tomorrow for the next one!
+                        </p>
+                      </div>
                     )}
                   </div>
                 ) : (
@@ -338,118 +394,119 @@ if(MinDiff > 15) {
         </div>
 
         {/* Session History */}
-       <div className="mt-8">
-  <div className="flex items-center justify-between mb-4">
-    <h2 className="text-lg font-medium text-gray-900">Your Session History</h2>
-    <button
-      onClick={() => navigate('/me/history')}
-      className="text-sm font-medium text-purple-600 hover:text-purple-500"
-    >
-      View all history →
-    </button>
-  </div>
-  <div className="bg-white shadow overflow-hidden sm:rounded-md">
-    {loadingHistory ? (
-      <div className="flex justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
-      </div>
-    ) : history.length === 0 ? (
-      <div className="text-center p-8 text-gray-500">
-        No session history found
-      </div>
-    ) : (
-      <>
-        <ul className="divide-y divide-gray-200">
-          {history.map((item) => {
-            const sessionDate = new Date(item.session.startTime);
-            const duration = item.session.attendees?.duration || 0;
-            const isCompleted = item.session.status === 'completed';
-            
-            return (
-              <li key={item.session._id} className="px-6 py-4 hover:bg-gray-50">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-purple-600 truncate">
-                    {item.title}
-                  </p>
-                  <div className="ml-2 flex-shrink-0 flex">
-                    <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      isCompleted 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {isCompleted ? 'Completed' : 'Incomplete'}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-2 flex justify-between items-center">
-                  <div className="flex text-sm text-gray-500">
-                    <span>
-                      {sessionDate.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </span>
-                    <span className="mx-1">·</span>
-                    <span>{duration} minutes</span>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className={`h-5 w-5 rounded-full flex items-center justify-center ${
-                      isCompleted ? 'bg-green-400' : 'bg-yellow-400'
-                    }`}>
-                      {isCompleted && (
-                        <svg className="h-3.5 w-3.5 text-white" fill="currentColor" viewBox="0 0 12 12">
-                          <path d="M10.28 2.28L3.987 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
-                        </svg>
-                      )}
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-medium text-gray-900">Your Session History</h2>
+            <button
+              onClick={() => navigate('/me/history')}
+              className="text-sm font-medium text-purple-600 hover:text-purple-500"
+            >
+              View all history →
+            </button>
+          </div>
+          <div className="bg-white shadow overflow-hidden sm:rounded-md">
+            {loadingHistory ? (
+              <div className="flex justify-center p-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+              </div>
+            ) : history.length === 0 ? (
+              <div className="text-center p-8 text-gray-500">
+                No session history found
+              </div>
+            ) : (
+              <>
+                <ul className="divide-y divide-gray-200">
+                  {history.map((item) => {
+                    const sessionDate = new Date(item.session.startTime);
+                    const duration = item.session.attendees?.duration || 0;
+                    const isCompleted = item.session.status === 'completed';
+                    
+                    return (
+                      <li key={item.session._id} className="px-6 py-4 hover:bg-gray-50">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium text-purple-600 truncate">
+                            {item.title}
+                          </p>
+                          <div className="ml-2 flex-shrink-0 flex">
+                            <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              isCompleted 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-yellow-100 text-yellow-800'
+                            }`}>
+                              {isCompleted ? 'Completed' : 'Incomplete'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="mt-2 flex justify-between items-center">
+                          <div className="flex text-sm text-gray-500">
+                            <span>
+                              {sessionDate.toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                              })}
+                              {isCompleted && duration > 0 && (
+                                <span className="ml-2">• {Math.floor(duration / 60)} min</span>
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex-shrink-0">
+                            <div className={`h-5 w-5 rounded-full flex items-center justify-center ${
+                              isCompleted ? 'bg-green-400' : 'bg-yellow-400'
+                            }`}>
+                              {isCompleted && (
+                                <svg className="h-3.5 w-3.5 text-white" fill="currentColor" viewBox="0 0 12 12">
+                                  <path d="M10.28 2.28L3.987 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z" />
+                                </svg>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                
+                {/* Pagination */}
+                {pagination.pages > 1 && (
+                  <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div className="flex-1 flex justify-between sm:justify-end">
+                      <button
+                        onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                        disabled={pagination.page === 1}
+                        className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                          pagination.page === 1 
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                            : 'bg-white text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        <FiChevronLeft className="h-5 w-5" />
+                        Previous
+                      </button>
+                      <div className="flex items-center mx-4">
+                        <span className="text-sm text-gray-700">
+                          Page {pagination.page} of {pagination.pages}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
+                        disabled={pagination.page >= pagination.pages}
+                        className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
+                          pagination.page >= pagination.pages
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                            : 'bg-white text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        Next
+                        <FiChevronRight className="h-5 w-5" />
+                      </button>
                     </div>
                   </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-        
-        {/* Pagination */}
-        {pagination.pages > 1 && (
-          <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div className="flex-1 flex justify-between sm:justify-end">
-              <button
-                onClick={handlePrevPage}
-                disabled={pagination.page === 1}
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
-                  pagination.page === 1 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                <FiChevronLeft className="h-5 w-5" />
-                Previous
-              </button>
-              <div className="flex items-center mx-4">
-                <span className="text-sm text-gray-700">
-                  Page {pagination.page} of {pagination.pages}
-                </span>
-              </div>
-              <button
-                onClick={handleNextPage}
-                disabled={pagination.page >= pagination.pages}
-                className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
-                  pagination.page >= pagination.pages
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Next
-                <FiChevronRight className="h-5 w-5" />
-              </button>
-            </div>
+                )}
+              </>
+            )}
           </div>
-        )}
-      </>
-    )}
-  </div>
-</div>
+        </div>
       </div>
     </div>
   );
