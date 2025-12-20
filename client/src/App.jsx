@@ -35,6 +35,9 @@ import Research from "./pages/Research";
 import TextLoader from "./components/ui/TextLoader";
 import MeditationVideos from "./pages/user/MeditationVideos";
 import Feedback from "./pages/user/Feedback";
+import TermsAndConditions from "./components/TermsAndConditions";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import SubscriptionPlanDetail from "./components/SubscriptionPlanDetail";
 
 
 function App() {
@@ -102,12 +105,15 @@ function App() {
             <Route path="/research" element={<Research />} />
 
             <Route path="/meditation-videos" element={<MeditationVideos />} />
-
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route
               path="/feedback"
               element={user ? <Feedback /> : <Navigate to="/auth/login" replace />}
             />
           
+              <Route path="/plans/:planId" 
+              element={user ? <SubscriptionPlanDetail /> : <Navigate to="/auth/login" replace />} />
 
               <Route
               path="/admin/dashboard"

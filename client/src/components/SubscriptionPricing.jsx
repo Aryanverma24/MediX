@@ -1,91 +1,210 @@
+// src/components/SubscriptionPricing.jsx
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const plans = [
   {
+    id: "monthly",
     title: "Monthly",
-    price: "₹ 499 / month",
-    approx: "Approx. ₹ 499 per month",
-    save: "",
-    description: "Access to all daily sessions, recordings, gratitude & journaling exercises."
+    price: "₹ 499",
+    period: "per month",
+    features: [
+      "Access to all daily live sessions",
+      "Unlimited session recordings",
+      "Digital journal with prompts",
+      "Basic progress tracking",
+      "Email support"
+    ],
+    popular: false
   },
   {
+    id: "quarterly",
     title: "Quarterly",
-    price: "₹ 1299 total",
-    approx: "≈ ₹ 433 per month",
-    save: "(save ~13 %)",
-    description: "Same features; more economical for committed practice."
+    price: "₹ 1,299",
+    period: "for 3 months",
+    originalPrice: "₹ 1,497",
+    save: "Save 13%",
+    features: [
+      "Everything in Monthly, plus:",
+      "Priority email support",
+      "3 one-on-one coaching sessions",
+      "Exclusive quarterly workshops"
+    ],
+    popular: false
   },
   {
+    id: "halfyearly",
     title: "Half-Yearly",
-    price: "₹ 2499 total",
-    approx: "≈ ₹ 417 per month",
-    save: "(save ~16 %)",
-    description: "Encourages sustained practice and deeper transformation."
+    price: "₹ 2,499",
+    period: "for 6 months",
+    originalPrice: "₹ 2,994",
+    save: "Save 16%",
+    features: [
+      "Everything in Quarterly, plus:",
+      "Weekly group coaching",
+      "6 one-on-one sessions",
+      "Premium content library"
+    ],
+    popular: true
   },
   {
+    id: "annual",
     title: "Annual",
-    price: "₹ 4799 total",
-    approx: "≈ ₹400 per month",
-    save: "(save ~20 %)",
-    description: "Best value; supports long-term."
+    price: "₹ 4,799",
+    period: "for 12 months",
+    originalPrice: "₹ 5,988",
+    save: "Save 20%",
+    features: [
+      "Everything in Half-Yearly, plus:",
+      "Unlimited coaching",
+      "Monthly personalized sessions",
+      "VIP support (24h response)",
+    ],
+    popular: false
   }
 ];
 
 const SubscriptionPricing = () => {
-  return (
-    <section className="relative py-24 bg-white overflow-hidden">
-      <h2 className="text-3xl md:text-5xl font-bold text-center text-orange-500 mb-16">
-        Plans
-      </h2>
+  const navigate = useNavigate();
 
-      {/* Optional subtle background particles / techy look */}
-      <div className="absolute inset-0 pointer-events-none opacity-10">
-        <div
-          style={{
-            backgroundImage:
-              "radial-gradient(#fb923c40 1px, transparent 1px), radial-gradient(#fcd34d30 1px, transparent 1px)",
-            backgroundSize: "50px 50px"
-          }}
-          className="w-full h-full"
-        ></div>
+  return (
+    <section className="relative py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-8 justify-center">
-        {plans.map((plan, i) => (
-
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.15 }}
-            className="
-            group
-              relative
-              flex-1
-              bg-white/60
-              backdrop-blur-xl
-              border border-orange-100
-              rounded-3xl
-              p-8
-              shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)]
-              hover:shadow-[0_30px_70px_-20px_rgba(251,146,60,0.5)]
-              hover:-translate-y-2
-              transition-all
-              duration-500
-              text-center
-            "
+            transition={{ duration: 0.6 }}
           >
+            Choose Your Meditation Journey
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Select the plan that aligns with your meditation goals and lifestyle.
+            Cancel or switch plans anytime.
+          </motion.p>
+        </div>
 
-         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-orange-300/20 via-transparent to-amber-300/20 pointer-events-none rounded-3xl"></div>
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {plans.map((plan, index) => (
+            <motion.div
+              key={plan.id}
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: { 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }
+              }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ 
+                y: -10,
+                transition: { 
+                  duration: 0.3,
+                  type: "spring",
+                  stiffness: 200
+                }
+              }}
+              onClick={() => navigate(`/plans/${plan.id}`)}
+              className={`
+                relative
+                flex flex-col
+                bg-white/80 backdrop-blur-sm
+                border border-gray-100
+                rounded-2xl
+                p-6
+                shadow-lg
+                overflow-hidden
+                cursor-pointer
+                transition-all
+                duration-300
+                hover:shadow-xl
+                hover:border-orange-200
+                ${plan.popular ? 'ring-2 ring-orange-400' : ''}
+              `}
+            >
+              {plan.popular && (
+                <div className="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                  POPULAR
+                </div>
+              )}
+              
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{plan.title}</h3>
+                <div className="flex items-baseline">
+                  <span className="text-3xl font-extrabold text-gray-900">{plan.price}</span>
+                  <span className="ml-2 text-gray-500">{plan.period}</span>
+                </div>
+                {plan.originalPrice && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    <span className="line-through mr-2">{plan.originalPrice}</span>
+                    <span className="text-green-600 font-medium">{plan.save}</span>
+                  </p>
+                )}
+              </div>
 
-            <h3 className="text-2xl font-bold text-orange-500 mb-2">{plan.title}</h3>
-            <p className="text-3xl font-extrabold text-gray-900 mb-1">{plan.price}</p>
-            <p className="text-sm text-gray-500 mb-2">{plan.approx} {plan.save && <span className="text-orange-500">{plan.save}</span>}</p>
-            <p className="text-gray-700 leading-relaxed">{plan.description}</p>
-          </motion.div>
-        ))}
+              <div className="flex-1 mb-6">
+                <ul className="space-y-3">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start">
+                      <svg
+                        className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`
+                  w-full py-3 px-4 rounded-xl font-medium
+                  bg-gradient-to-r from-orange-500 to-amber-500
+                  text-white
+                  shadow-md
+                  hover:shadow-lg
+                  transition-all
+                  duration-200
+                `}
+              >
+                Choose Plan
+              </motion.button>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

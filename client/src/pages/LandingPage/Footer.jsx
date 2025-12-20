@@ -8,6 +8,8 @@ import {
   FaPhoneAlt,
   FaMapMarkerAlt
 } from "react-icons/fa";
+import { ShieldCheck} from "lucide-react"
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -89,8 +91,26 @@ const Footer = () => {
 
       </div>
 
+       <div className="md:flex md:gap-10 md:justify-center">
+                   <Link 
+  to="/terms" 
+  className="text-stone-600 hover:text-orange-500  transition-colors duration-200 flex items-center justify-center gap-2 text-sm font-medium mt-4"
+>
+  <span>📜</span>
+  Terms and Conditions
+</Link>
+
+<Link 
+  to="/privacy" 
+  className="text-stone-600 hover:text-orange-500 transition-colors duration-200 flex items-center justify-center gap-2 text-sm font-medium mt-4"
+>
+  <ShieldCheck className="w-4 h-4" />
+  Privacy Policy
+</Link>
+            </div>
+
       {/* Divider */}
-      <div className="border-t border-orange-200 mt-12"></div>
+      <div className="border-t border-orange-200 mt-6"></div>
 
       {/* Copyright */}
       <p className="text-center text-sm text-stone-600 mt-6">
