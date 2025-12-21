@@ -65,13 +65,9 @@ export const sendCsvEmails = async (req, res) => {
                     </style>
                 </head>
                 <body>
-                  <div class="header">
-    <div style="text-align: center; margin-bottom: 20px;">
-        <img src="https://medix-1-eoz3.onrender.com/images/avyakt-ehsaas-logo.webp"  alt="Avyakt Ehsaas Logo" 
-             style="max-height: 50px; width: auto;"/>
-        <h1 style="margin: 10px 0; color: #3b82f6; font-size: 24px;">Avyakt Ehsaas</h1>
-    </div>
-</div>
+                    <div class="header">
+                        <div class="logo">Avyakt-Ehsaas 🧘</div>
+                    </div>
                     
                     <div class="content">
                         <p>Dear ${formattedName},</p>
