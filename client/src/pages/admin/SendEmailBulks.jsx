@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { sendCsvEmails } from "../../services/EmailApi"
+import { sendCsvEmails } from "../../../services/EmailApi"
 import { useAuth } from "../../hooks/useAuth"
 import { UploadCloud, Send } from "lucide-react"
 
