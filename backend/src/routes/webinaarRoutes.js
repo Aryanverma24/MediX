@@ -4,7 +4,7 @@ import { createWebinar ,
     getAllWebinars ,
     getWebinarById,
     updateWebinar,
-    deleteWebinarbyID
+    deleteWebinarbyId
 } from "../controllers/webinarController.js";
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.get("/:id",protect,getWebinarById);
 
 router.put("/:id",protect,updateWebinar);
 
-router.delete("/:id",protect,deleteWebinarbyID)
+router.delete("/:id",protect,deleteWebinarbyId)
 
 export default router
 
