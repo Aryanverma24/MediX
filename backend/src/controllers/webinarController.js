@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import {getAccessToken} from "../util/zohoAccessToken.js";
 
-const ZOHO_API = process.env.ZOHO_API_DOMAIN;
+const ZOHO_API = process.env.ZOHO_MEETING_API;
 
 export const createWebinar = async (req,res) => {
 
@@ -28,7 +28,7 @@ export const getAllWebinars = async(req,res) => {
     try {
         const accessToken = await getAccessToken();
         console.log(accessToken);
-        console.log(ZOHO_API)
+        console.log(ZOHO_API);
         const response = await axios.get(`${ZOHO_API}/webinars`,{
              headers: { Authorization: `Bearer ${accessToken}` },
         });
