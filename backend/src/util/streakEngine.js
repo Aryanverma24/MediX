@@ -70,7 +70,7 @@ export const updateStreak = (user, todayDate) => {
       user.currentTree.daysGrown += 1;
       user.currentTree.lastWatered = today;
       user.currentTree.stage =
-        stageMap[user.currentTree.daysGrown - 1] || "full";
+        stageMap[user.currentTree.daysGrown - 1] || "Tree";
     }
   }
 

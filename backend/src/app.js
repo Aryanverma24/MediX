@@ -45,4 +45,11 @@ app.use("/api/meetings",meetingRoutes)
 app.use("/api/email", emailRoutes);
 app.use("/api/feedback", feedbackRoutes);
 
+
+
+app.get("/api/zoho/callback", (req, res) => {
+  res.status(200).send("Zoho authorization successful. You can close this tab.");
+});
+
+
 export default app;
